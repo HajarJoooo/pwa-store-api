@@ -1,0 +1,422 @@
+### ==============================================================================
+### PWA Store API - Phase 6: Developer Portal & Dashboard
+### Base URL: http://localhost:8000/api/v1/developer
+### All routes require Bearer Token (Sanctum) with 'developer' role / permissions
+### Write operations are rate-limited via throttle:write (30 req/min per developer)
+### ==============================================================================
+
+@baseUrl = http://localhost:8000/api/v1/developer
+@contentType = application/json
+@acceptJson = application/json
+@acceptLanguage = ar
+@authToken = <TOKEN>
+
+### ------------------------------------------------------------------------------
+### 1. GET /developer/dashboard - لوحة معلومات وإحصائيات المطور (200 OK)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/dashboard
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تم جلب بيانات لوحة التحكم بنجاح.",
+#   "data": {
+#     "counts": {
+#       "draft": 1,
+#       "pending": 2,
+#       "approved": 4,
+#       "rejected": 1
+#     },
+#     "total_installs": 1850,
+#     "total_reviews": 46,
+#     "average_rating": 4.65,
+#     "top_pwas": [
+#       {
+#         "id": 12,
+#         "name": "تطبيق إدارة المهام الذكي",
+#         "slug": "smart-task-manager",
+#         "icon_url": "https://example.com/icons/tasks.png",
+#         "install_count": 950,
+#         "rating_average": 4.80,
+#         "review_count": 25
+#       },
+#       {
+#         "id": 14,
+#         "name": "متجر التقنية السريع",
+#         "slug": "quick-tech-store",
+#         "icon_url": "https://example.com/icons/store.png",
+#         "install_count": 600,
+#         "rating_average": 4.50,
+#         "review_count": 15
+#       }
+#     ],
+#     "recent_reviews": [
+#       {
+#         "id": 88,
+#         "rating": 5,
+#         "title": "تطبيق ممتاز وسريع جداً",
+#         "content": "يعمل دون انقطاع وتصميمه رائع.",
+#         "pwa": {
+#           "id": 12,
+#           "name": "تطبيق إدارة المهام الذكي",
+#           "slug": "smart-task-manager"
+#         },
+#         "reviewer": {
+#           "first_name": "سعد",
+#           "username": "saad_user",
+#           "avatar_url": "https://ui-avatars.com/api/?name=Saad"
+#         },
+#         "created_at": "2026-11-16T14:30:00.000000Z"
+#       }
+#     ]
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 2. GET /developer/pwas - قائمة تطبيقات المطور بكل الحالات مع ترقيم الصفحات (200 OK)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas?per_page=12&page=1
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تمت العملية بنجاح.",
+#   "data": [
+#     {
+#       "id": 12,
+#       "name": "تطبيق إدارة المهام الذكي",
+#       "slug": "smart-task-manager",
+#       "short_description": "تطبيق ويب تقدمي لتنظيم الأعمال وإدارة المهام اليومية",
+#       "description": "وصف تفصيلي يشرح جميع مميزات وإمكانيات التطبيق التقنية.",
+#       "manifest_url": "https://tasks.example.com/manifest.json",
+#       "start_url": "https://tasks.example.com/",
+#       "icon_url": "https://example.com/icons/tasks.png",
+#       "screenshots": [
+#         "https://example.com/shots/1.png"
+#       ],
+#       "version": "1.2.0",
+#       "status": "approved",
+#       "is_published": true,
+#       "rejection_reason": null,
+#       "reviewed_at": "2026-11-15T10:00:00.000000Z",
+#       "install_count": 950,
+#       "rating_average": 4.80,
+#       "review_count": 25,
+#       "category": {
+#         "id": 1,
+#         "name": "Productivity",
+#         "name_ar": "الإنتاجية",
+#         "slug": "productivity"
+#       },
+#       "created_at": "2026-11-14T08:00:00.000000Z",
+#       "updated_at": "2026-11-15T10:00:00.000000Z"
+#     }
+#   ],
+#   "meta": {
+#     "current_page": 1,
+#     "per_page": 12,
+#     "total": 1,
+#     "last_page": 1
+#   },
+#   "links": {
+#     "first": "http://localhost:8000/api/v1/developer/pwas?page=1",
+#     "last": "http://localhost:8000/api/v1/developer/pwas?page=1",
+#     "prev": null,
+#     "next": null
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 3. GET /developer/pwas?status=rejected - تصفية التطبيقات المرفوضة مع سبب الرفض
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas?status=rejected
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تمت العملية بنجاح.",
+#   "data": [
+#     {
+#       "id": 18,
+#       "name": "تطبيق الدليل الطبي",
+#       "slug": "medical-guide-app",
+#       "status": "rejected",
+#       "is_published": false,
+#       "rejection_reason": "أيقونة التطبيق غير مطابقة للمواصفات، ويرجى توفير لقطات شاشة بدقة أعلى.",
+#       "reviewed_at": "2026-11-16T09:00:00.000000Z"
+#     }
+#   ],
+#   "meta": { "total": 1 },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 4. GET /developer/pwas?status=invalid - خطأ فلترة بحالة غير صالحة (422)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas?status=deleted
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "بيانات الإدخال غير صالحة، يرجى تصحيح الأخطاء.",
+#   "data": null,
+#   "errors": {
+#     "status": [
+#       "القيمة المحددة لـ status غير صالحة."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 5. POST /developer/pwas - تقديم تطبيق جديد للمراجعة (201 Created)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "مفكرتي اليومية",
+  "category_id": 1,
+  "short_description": "تطبيق ويب تقدمي بسيط ومرن لكتابة اليوميات والمذكرات الشخصية",
+  "description": "تطبيق كامل لحفظ اليوميات مشفرة محلياً مع دعم العمل بدون إنترنت.",
+  "manifest_url": "https://diary.example.com/manifest.json",
+  "start_url": "https://diary.example.com/",
+  "icon_url": "https://diary.example.com/icon.png",
+  "screenshots": [
+    "https://diary.example.com/shot1.png"
+  ],
+  "version": "1.0.0"
+}
+
+### Response: 201 Created
+# {
+#   "success": true,
+#   "message": "تم تقديم التطبيق للمراجعة بنجاح.",
+#   "data": {
+#     "id": 20,
+#     "name": "مفكرتي اليومية",
+#     "slug": "mfkrty-alywmyh",
+#     "status": "pending",
+#     "is_published": false,
+#     "install_count": 0,
+#     "rating_average": 0.00,
+#     "review_count": 0,
+#     "rejection_reason": null,
+#     "reviewed_at": null,
+#     "category": {
+#       "id": 1,
+#       "name": "Productivity",
+#       "name_ar": "الإنتاجية",
+#       "slug": "productivity"
+#     }
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 6. POST /developer/pwas - خطأ تكرار رابط الـ Manifest للمطور (422)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "تطبيق مكرر",
+  "category_id": 1,
+  "short_description": "وصف التطبيق",
+  "manifest_url": "https://diary.example.com/manifest.json",
+  "start_url": "https://diary.example.com/"
+}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "بيانات الإدخال غير صالحة، يرجى تصحيح الأخطاء.",
+#   "data": null,
+#   "errors": {
+#     "manifest_url": [
+#       "لديك تطبيق مسجل بالفعل بهذا الرابط (Manifest URL)."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 7. POST /developer/pwas - خطأ رابط غير آمن (Non-HTTPS URL) (422)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "تطبيق غير آمن",
+  "category_id": 1,
+  "short_description": "وصف التطبيق",
+  "manifest_url": "http://insecure.example.com/manifest.json",
+  "start_url": "http://insecure.example.com/"
+}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "بيانات الإدخال غير صالحة، يرجى تصحيح الأخطاء.",
+#   "data": null,
+#   "errors": {
+#     "manifest_url": [
+#       "يجب أن يبدأ رابط الـ Manifest بأحد القيم التالية: https://."
+#     ],
+#     "start_url": [
+#       "يجب أن يبدأ رابط البداية بأحد القيم التالية: https://."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 8. PUT /developer/pwas/{id} - تعديل تطبيق بحالة rejected أو draft (200 OK)
+### ------------------------------------------------------------------------------
+PUT {{baseUrl}}/pwas/18
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "تطبيق الدليل الطبي المحدث",
+  "icon_url": "https://medical.example.com/new-icon-512.png"
+}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تم تحديث بيانات التطبيق بنجاح.",
+#   "data": {
+#     "id": 18,
+#     "name": "تطبيق الدليل الطبي المحدث",
+#     "slug": "medical-guide-app",
+#     "status": "rejected",
+#     "rejection_reason": "أيقونة التطبيق غير مطابقة للمواصفات، ويرجى توفير لقطات شاشة بدقة أعلى."
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 9. PUT /developer/pwas/{id} - محاولة تعديل تطبيق معتمد approved أو معلق pending (422)
+### ------------------------------------------------------------------------------
+PUT {{baseUrl}}/pwas/12
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "محاولة تعديل تطبيق معتمد"
+}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "بيانات الإدخال غير صالحة، يرجى تصحيح الأخطاء.",
+#   "data": null,
+#   "errors": {
+#     "status": [
+#       "لا يمكن تعديل التطبيقات المعتمدة في الإصدار الحالي."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 10. PUT /developer/pwas/{id} - محاولة تعديل تطبيق مطور آخر (404 Not Found)
+### ------------------------------------------------------------------------------
+PUT {{baseUrl}}/pwas/999
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "محاولة تعديل"
+}
+
+### Response: 404 Not Found
+# {
+#   "success": false,
+#   "message": "المورد المطلوب غير موجود.",
+#   "data": null,
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 11. POST /developer/pwas/{id}/resubmit - إعادة إرسال تطبيق مرفوض للمراجعة (200 OK)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/18/resubmit
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تمت إعادة إرسال التطبيق للمراجعة بنجاح.",
+#   "data": {
+#     "id": 18,
+#     "status": "pending",
+#     "rejection_reason": null,
+#     "reviewed_at": null
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 12. POST /developer/pwas/{id}/resubmit - محاولة إعادة إرسال تطبيق معتمد (422)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/12/resubmit
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "بيانات الإدخال غير صالحة، يرجى تصحيح الأخطاء.",
+#   "data": null,
+#   "errors": {
+#     "status": [
+#       "يمكن إعادة إرسال التطبيقات المرفوضة أو المسودات فقط للمراجعة."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 13. GET /developer/dashboard - خطأ مستخدم غير مصرح (403 Forbidden - Role: user)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/dashboard
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 403 Forbidden
+# {
+#   "success": false,
+#   "message": "ليس لديك الصلاحية الكافية لتنفيذ هذا الإجراء.",
+#   "data": null,
+#   "errors": null
+# }

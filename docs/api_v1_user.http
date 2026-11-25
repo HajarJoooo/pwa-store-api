@@ -1,0 +1,357 @@
+### ==============================================================================
+### PWA Store API - Phase 5: Authenticated User Actions (Installations & Reviews)
+### Base URL: http://localhost:8000/api/v1
+### All routes require Bearer Token (Sanctum)
+### Write operations are rate-limited via throttle:write (30 req/min per user)
+### ==============================================================================
+
+@baseUrl = http://localhost:8000/api/v1
+@contentType = application/json
+@acceptJson = application/json
+@acceptLanguage = ar
+@authToken = <TOKEN>
+
+### ------------------------------------------------------------------------------
+### 1. POST /pwas/{slug}/install - أول تثبيت لتطبيق منشور (201 Created)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/azkar-muslim-app/install
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 201 Created
+# {
+#   "success": true,
+#   "message": "تم تثبيت التطبيق بنجاح.",
+#   "data": {
+#     "installed_at": "2026-11-14T16:00:00.000000Z",
+#     "install_count": 351
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 2. POST /pwas/{slug}/install - تثبيت مكرر (Idempotent: 200 OK دون زيادة العداد)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/azkar-muslim-app/install
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "التطبيق مثبت لديك مسبقاً.",
+#   "data": {
+#     "installed_at": "2026-11-14T16:00:00.000000Z",
+#     "install_count": 351
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 3. POST /pwas/{slug}/install - محاولة تثبيت تطبيق غير منشور أو غير موجود (404 Not Found)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/unpublished-or-draft-app/install
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 404 Not Found
+# {
+#   "success": false,
+#   "message": "المورد المطلوب غير موجود.",
+#   "data": null,
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 4. POST /pwas/{slug}/install - خطأ عدم المصادقة (401 Unauthorized)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/azkar-muslim-app/install
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+
+### Response: 401 Unauthorized
+# {
+#   "success": false,
+#   "message": "يجب تسجيل الدخول للوصول إلى هذا المورد.",
+#   "data": null,
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 5. GET /me/installations - قائمة تطبيقات المستخدم المثبتة (مرتبة بالأحدث ومقسمة لصفحات)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/me/installations?per_page=12&page=1
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تمت العملية بنجاح.",
+#   "data": [
+#     {
+#       "id": 1,
+#       "name": "متجر أذكار المسلم",
+#       "slug": "azkar-muslim-app",
+#       "short_description": "تطبيق ويب تقدمي للأذكار اليومية وحصن المسلم",
+#       "icon_url": "https://example.com/icons/azkar.png",
+#       "version": "1.2.0",
+#       "rating_average": 4.85,
+#       "review_count": 24,
+#       "install_count": 351,
+#       "category": {
+#         "name": "Islamic & Lifestyle",
+#         "name_ar": "إسلاميات وأسلوب حياة",
+#         "slug": "islamic-lifestyle"
+#       },
+#       "installed_at": "2026-11-14T16:00:00.000000Z"
+#     }
+#   ],
+#   "meta": {
+#     "current_page": 1,
+#     "per_page": 12,
+#     "total": 1,
+#     "last_page": 1
+#   },
+#   "links": {
+#     "first": "http://localhost:8000/api/v1/me/installations?page=1",
+#     "last": "http://localhost:8000/api/v1/me/installations?page=1",
+#     "prev": null,
+#     "next": null
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 6. POST /pwas/{slug}/reviews - إضافة مراجعة وتقييم لتطبيق مثبت (201 Created)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/azkar-muslim-app/reviews
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "rating": 5,
+  "title": "تطبيق متميز جداً",
+  "content": "يعمل دون انقطاع وتصميمه مريح جداً للعين عند القراءة الليلية."
+}
+
+### Response: 201 Created
+# {
+#   "success": true,
+#   "message": "تم إضافة تقييمك بنجاح.",
+#   "data": {
+#     "id": 15,
+#     "rating": 5,
+#     "title": "تطبيق متميز جداً",
+#     "content": "يعمل دون انقطاع وتصميمه مريح جداً للعين عند القراءة الليلية.",
+#     "helpful_count": 0,
+#     "created_at": "2026-11-14T16:05:00.000000Z",
+#     "reviewer": {
+#       "first_name": "سعد",
+#       "username": "saad_user",
+#       "avatar_url": "https://ui-avatars.com/api/?name=Saad"
+#     }
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 7. POST /pwas/{slug}/reviews - خطأ تكرار المراجعة لنفس التطبيق (422)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/azkar-muslim-app/reviews
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "rating": 4,
+  "title": "محاولة مراجعة ثانية"
+}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "بيانات الإدخال غير صالحة، يرجى تصحيح الأخطاء.",
+#   "data": null,
+#   "errors": {
+#     "review": [
+#       "لقد قمت بتقييم هذا التطبيق مسبقاً."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 8. POST /pwas/{slug}/reviews - محاولة تقييم المطور لتطبيقه الخاص (422)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/my-developer-app/reviews
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "rating": 5,
+  "title": "أفضل تطبيق في العالم"
+}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "بيانات الإدخال غير صالحة، يرجى تصحيح الأخطاء.",
+#   "data": null,
+#   "errors": {
+#     "pwa": [
+#       "لا يمكنك تقييم تطبيقك الخاص."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 9. POST /pwas/{slug}/reviews - خطأ عدم تثبيت التطبيق قبل المراجعة (422)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/not-installed-yet-app/reviews
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "rating": 5,
+  "title": "تقييم بدون تثبيت"
+}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "بيانات الإدخال غير صالحة، يرجى تصحيح الأخطاء.",
+#   "data": null,
+#   "errors": {
+#     "pwa": [
+#       "يجب تثبيت التطبيق أولاً لتتمكن من تقييمه."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 10. POST /pwas/{slug}/reviews - خطأ تقييم خارج النطاق (422)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/azkar-muslim-app/reviews
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "rating": 7,
+  "title": "تقييم غير صحيح"
+}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "بيانات الإدخال غير صالحة، يرجى تصحيح الأخطاء.",
+#   "data": null,
+#   "errors": {
+#     "rating": [
+#       "يجب أن تكون قيمة التقييم بين 1 و 5."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 11. PUT /reviews/{id} - تعديل المستخدم لمراجعته الخاصة بحقول جزئية (200 OK)
+### ------------------------------------------------------------------------------
+PUT {{baseUrl}}/reviews/15
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "rating": 4,
+  "content": "تم تعديل المراجعة بعد التحديث الجديد للتطبيق."
+}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تم تعديل تقييمك بنجاح.",
+#   "data": {
+#     "id": 15,
+#     "rating": 4,
+#     "title": "تطبيق متميز جداً",
+#     "content": "تم تعديل المراجعة بعد التحديث الجديد للتطبيق.",
+#     "helpful_count": 0,
+#     "created_at": "2026-11-14T16:05:00.000000Z",
+#     "reviewer": {
+#       "first_name": "سعد",
+#       "username": "saad_user",
+#       "avatar_url": "https://ui-avatars.com/api/?name=Saad"
+#     }
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 12. PUT /reviews/{id} - محاولة تعديل مراجعة مستخدم آخر (403 Forbidden)
+### ------------------------------------------------------------------------------
+PUT {{baseUrl}}/reviews/99
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "rating": 1
+}
+
+### Response: 403 Forbidden
+# {
+#   "success": false,
+#   "message": "ليس لديك الصلاحية الكافية لتنفيذ هذا الإجراء.",
+#   "data": null,
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 13. DELETE /reviews/{id} - حذف المستخدم لمراجعته الخاصة (حذف ناعم: 200 OK)
+### ------------------------------------------------------------------------------
+DELETE {{baseUrl}}/reviews/15
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تم حذف التقييم بنجاح.",
+#   "data": null,
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 14. DELETE /reviews/{id} - محاولة حذف مراجعة مستخدم آخر (403 Forbidden)
+### ------------------------------------------------------------------------------
+DELETE {{baseUrl}}/reviews/99
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 403 Forbidden
+# {
+#   "success": false,
+#   "message": "ليس لديك الصلاحية الكافية لتنفيذ هذا الإجراء.",
+#   "data": null,
+#   "errors": null
+# }

@@ -1,0 +1,1239 @@
+openapi: 3.0.3
+info:
+  title: 'توثيق واجهة برمجة تطبيقات متجر PWA (PWA Store API)'
+  description: 'واجهة برمجة تطبيقات متجر تطبيقات الويب التقدمية (PWA Store) - النسخة v1. توفر واجهات RESTful متكاملة للمصادقة وتصفح التطبيقات والتصنيفات وتثبيت التطبيقات وإدارتها والمراجعات ولوحة تحكم المطورين وبوابة الإشراف والمراجعة.'
+  version: 1.0.0
+servers:
+  -
+    url: 'https://pwa-store-api.vercel.app'
+tags:
+  -
+    name: 'المصادقة (Authentication)'
+    description: "\nنقاط نهاية إدارة المصادقة، تسجيل المستخدمين والمطورين، تسجيل الدخول، واسترجاع بيانات الملف الشخصي ورموز الوصول."
+  -
+    name: 'التطبيقات العامة (Public PWAs)'
+    description: "\nتصفح تطبيقات الويب التقدمية المنشورة، البحث، التصفية حسب التصنيف، وعرض التفاصيل والمراجعات دون حاجة لتسجيل الدخول."
+  -
+    name: 'التصنيفات (Categories)'
+    description: "\nاسترجاع شجرة التصنيفات النشطة مع عدد التطبيقات المنشورة لكل تصنيف (مخزنة في الكاش)."
+  -
+    name: 'التثبيت (Installations)'
+    description: "\nتثبيت التطبيقات التقدمية للمستخدم المصادق، تتبع عدد التثبيتات، واستعراض سجل التطبيقات المثبتة للمستخدم."
+  -
+    name: 'المراجعات والتقييمات (Reviews)'
+    description: "\nإضافة تقييم ومراجعة للتطبيقات المنشورة (مراجعة واحدة لكل مستخدم)، وتحديث أو حذف المراجعة الخاصة بالمستخدم."
+  -
+    name: 'لوحة تحكم المطور (Developer Dashboard)'
+    description: "\nاستعراض الإحصائيات الشاملة لتطبيقات المطور (إجمالي التطبيقات، التثبيتات، متوسط التقييم، أحدث المراجعات، وأعلى التطبيقات أداءً)."
+  -
+    name: 'إدارة تطبيقات المطور (Developer PWAs)'
+    description: "\nإضافة تطبيقات جديدة، تعديل بيانات التطبيقات المملوكة للمطور، وإعادة تقديم التطبيقات المرفوضة بعد المعالجة."
+  -
+    name: 'بوابة المشرف (Moderator Portal)'
+    description: "\nاستعراض قائمة التطبيقات المعلقة بنظام الأقدم أولاً (FIFO)، فحص بيانات التطبيق والمطور، والموافقة على النشر أو الرفض مع سبب مطهر."
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'قم بإرسال الرمز في ترويسة الطلب: `Authorization: Bearer <TOKEN>`. يمكن الحصول على الرمز عبر تسجيل الدخول `/api/v1/auth/login` أو إنشاء حساب `/api/v1/auth/register`.'
+security:
+  -
+    default: []
+paths:
+  /api/v1/auth/register:
+    post:
+      summary: 'Register a new user with user or developer role.'
+      operationId: registerANewUserWithUserOrDeveloperRole
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - 'المصادقة (Authentication)'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: 'يجب ألا يتجاوز طول value 100 حرفاً.'
+                  example: b
+                last_name:
+                  type: string
+                  description: 'يجب ألا يتجاوز طول value 100 حرفاً.'
+                  example: 'n'
+                username:
+                  type: string
+                  description: 'Must contain only letters, numbers, dashes and underscores. يجب ألا يتجاوز طول value 50 حرفاً.'
+                  example: g
+                email:
+                  type: string
+                  description: 'يجب أن يكون value عنوان بريد إلكتروني صالحاً. يجب ألا يتجاوز طول value 255 حرفاً.'
+                  example: rowan.gulgowski@example.com
+                password:
+                  type: string
+                  description: 'يجب أن يتكون value من 8 أحرف على الأقل.'
+                  example: 'BNvYgxwmi/#iw/kX'
+                phone:
+                  type: string
+                  description: 'يجب ألا يتجاوز طول value 30 حرفاً.'
+                  example: w
+                  nullable: true
+                role:
+                  type: string
+                  description: ''
+                  example: user
+                  enum:
+                    - user
+                    - developer
+              required:
+                - first_name
+                - last_name
+                - username
+                - email
+                - password
+                - role
+      security: []
+  /api/v1/auth/login:
+    post:
+      summary: 'Authenticate user by email or username.'
+      operationId: authenticateUserByEmailOrUsername
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - 'المصادقة (Authentication)'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: ''
+                  example: architecto
+                password:
+                  type: string
+                  description: ''
+                  example: '|]|{+-'
+              required:
+                - login
+                - password
+      security: []
+  /api/v1/auth/me:
+    get:
+      summary: 'Return authenticated user profile.'
+      operationId: returnAuthenticatedUserProfile
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Authentication is required to access this resource.'
+                  data: null
+                  errors: null
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'Authentication is required to access this resource.'
+                  data:
+                    type: string
+                    example: null
+                    nullable: true
+                  errors:
+                    type: string
+                    example: null
+                    nullable: true
+      tags:
+        - 'المصادقة (Authentication)'
+      security: []
+  /api/v1/auth/logout:
+    post:
+      summary: 'Revoke the current access token.'
+      operationId: revokeTheCurrentAccessToken
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - 'المصادقة (Authentication)'
+      security: []
+  /api/v1/pwas:
+    get:
+      summary: 'Browse and search published PWAs with pagination and filters.'
+      operationId: browseAndSearchPublishedPWAsWithPaginationAndFilters
+      description: ''
+      parameters: []
+      responses:
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'The given data was invalid.'
+                  data: null
+                  errors:
+                    search:
+                      - 'The search field must be at least 2 characters.'
+                    category:
+                      - 'The selected category is invalid.'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'The given data was invalid.'
+                  data:
+                    type: string
+                    example: null
+                    nullable: true
+                  errors:
+                    type: object
+                    properties:
+                      search:
+                        type: array
+                        example:
+                          - 'The search field must be at least 2 characters.'
+                        items:
+                          type: string
+                      category:
+                        type: array
+                        example:
+                          - 'The selected category is invalid.'
+                        items:
+                          type: string
+      tags:
+        - 'التطبيقات العامة (Public PWAs)'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                search:
+                  type: string
+                  description: 'Must be at least 2 characters. Must not be greater than 100 characters.'
+                  example: b
+                  nullable: true
+                category:
+                  type: string
+                  description: 'Must match an existing stored value.'
+                  example: architecto
+                  nullable: true
+                sort:
+                  type: string
+                  description: ''
+                  example: newest
+                  enum:
+                    - newest
+                    - popular
+                    - top_rated
+                  nullable: true
+                per_page:
+                  type: integer
+                  description: 'Must be at least 1. Must not be greater than 50.'
+                  example: 22
+                  nullable: true
+                page:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 67
+                  nullable: true
+      security: []
+  '/api/v1/pwas/{slug}':
+    get:
+      summary: 'Display published PWA details by slug.'
+      operationId: displayPublishedPWADetailsBySlug
+      description: ''
+      parameters: []
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'The requested resource was not found.'
+                  data: null
+                  errors: null
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'The requested resource was not found.'
+                  data:
+                    type: string
+                    example: null
+                    nullable: true
+                  errors:
+                    type: string
+                    example: null
+                    nullable: true
+      tags:
+        - 'التطبيقات العامة (Public PWAs)'
+      security: []
+    parameters:
+      -
+        in: path
+        name: slug
+        description: 'The slug of the pwa.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/pwas/{slug}/reviews':
+    get:
+      summary: 'List approved reviews for a published PWA.'
+      operationId: listApprovedReviewsForAPublishedPWA
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  message: 'Operation completed successfully.'
+                  data: []
+                  meta:
+                    current_page: 22
+                    per_page: 1
+                    total: 3
+                    last_page: 3
+                  links:
+                    first: 'https://pwa-store-api.vercel.app/api/v1/pwas/salati-qibla/reviews?page=1'
+                    last: 'https://pwa-store-api.vercel.app/api/v1/pwas/salati-qibla/reviews?page=3'
+                    prev: 'https://pwa-store-api.vercel.app/api/v1/pwas/salati-qibla/reviews?page=21'
+                    next: null
+                  errors: null
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: 'Operation completed successfully.'
+                  data:
+                    type: array
+                    example: []
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 22
+                      per_page:
+                        type: integer
+                        example: 1
+                      total:
+                        type: integer
+                        example: 3
+                      last_page:
+                        type: integer
+                        example: 3
+                  links:
+                    type: object
+                    properties:
+                      first:
+                        type: string
+                        example: 'https://pwa-store-api.vercel.app/api/v1/pwas/salati-qibla/reviews?page=1'
+                      last:
+                        type: string
+                        example: 'https://pwa-store-api.vercel.app/api/v1/pwas/salati-qibla/reviews?page=3'
+                      prev:
+                        type: string
+                        example: 'https://pwa-store-api.vercel.app/api/v1/pwas/salati-qibla/reviews?page=21'
+                      next:
+                        type: string
+                        example: null
+                        nullable: true
+                  errors:
+                    type: string
+                    example: null
+                    nullable: true
+      tags:
+        - 'التطبيقات العامة (Public PWAs)'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sort:
+                  type: string
+                  description: ''
+                  example: newest
+                  enum:
+                    - newest
+                    - helpful
+                  nullable: true
+                per_page:
+                  type: integer
+                  description: 'Must be at least 1. Must not be greater than 50.'
+                  example: 1
+                  nullable: true
+                page:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 22
+                  nullable: true
+      security: []
+    post:
+      summary: 'Submit a review for a PWA.'
+      operationId: submitAReviewForAPWA
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - 'المراجعات والتقييمات (Reviews)'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rating:
+                  type: integer
+                  description: 'Must be between 1 and 5.'
+                  example: 2
+                title:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: 'n'
+                  nullable: true
+                content:
+                  type: string
+                  description: 'Must not be greater than 2000 characters.'
+                  example: g
+                  nullable: true
+              required:
+                - rating
+      security: []
+    parameters:
+      -
+        in: path
+        name: slug
+        description: 'The slug of the pwa.'
+        example: salati-qibla
+        required: true
+        schema:
+          type: string
+  /api/v1/categories:
+    get:
+      summary: 'List active categories tree with published PWAs count.'
+      operationId: listActiveCategoriesTreeWithPublishedPWAsCount
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  message: 'Operation completed successfully.'
+                  data:
+                    -
+                      id: 1
+                      name: Games
+                      name_ar: ألعاب
+                      slug: games
+                      description: 'أفضل ألعاب الويب التقدمية الخفيفة والممتعة المتاحة للعب فوراً بدون تحميل مساحة إضافية.'
+                      icon_url: 'https://api.iconify.design/lucide:gamepad-2.svg'
+                      sort_order: 1
+                      pwas_count: 2
+                      children: []
+                    -
+                      id: 2
+                      name: Education
+                      name_ar: تعليم
+                      slug: education
+                      description: 'تطبيقات تعليمية، دورات تدريبية، وأدوات تعلّم اللغات والعلوم.'
+                      icon_url: 'https://api.iconify.design/lucide:graduation-cap.svg'
+                      sort_order: 2
+                      pwas_count: 2
+                      children: []
+                    -
+                      id: 3
+                      name: Productivity
+                      name_ar: إنتاجية
+                      slug: productivity
+                      description: 'أدوات إدارة المهام، تدوين الملاحظات، وجدولة المواعيد لزيادة فاعليتك اليومية.'
+                      icon_url: 'https://api.iconify.design/lucide:check-square.svg'
+                      sort_order: 3
+                      pwas_count: 1
+                      children: []
+                    -
+                      id: 4
+                      name: 'Social Media'
+                      name_ar: 'تواصل اجتماعي'
+                      slug: social
+                      description: 'منصات التواصل، المحادثات، وبناء المجتمعات الرقمية.'
+                      icon_url: 'https://api.iconify.design/lucide:users.svg'
+                      sort_order: 4
+                      pwas_count: 1
+                      children: []
+                    -
+                      id: 5
+                      name: Entertainment
+                      name_ar: ترفيه
+                      slug: entertainment
+                      description: 'تطبيقات البودكاست، الموسيقى، الفيديوهات والراديو.'
+                      icon_url: 'https://api.iconify.design/lucide:tv.svg'
+                      sort_order: 5
+                      pwas_count: 1
+                      children: []
+                    -
+                      id: 6
+                      name: News
+                      name_ar: أخبار
+                      slug: news
+                      description: 'متابعة الأخبار العربية والعالمية لحظة بلحظة مع تجربة قراءة سريعة.'
+                      icon_url: 'https://api.iconify.design/lucide:newspaper.svg'
+                      sort_order: 6
+                      pwas_count: 1
+                      children: []
+                    -
+                      id: 7
+                      name: Shopping
+                      name_ar: تسوق
+                      slug: shopping
+                      description: 'متاجر إلكترونية تقدمية للتسوق وشراء المنتجات بسهولة وسرعة فائقة.'
+                      icon_url: 'https://api.iconify.design/lucide:shopping-bag.svg'
+                      sort_order: 7
+                      pwas_count: 1
+                      children: []
+                    -
+                      id: 8
+                      name: 'Health & Fitness'
+                      name_ar: 'صحة ولياقة'
+                      slug: health-fitness
+                      description: 'تتبع التمارين، الحمية الغذائية، والصحة العامة والنفسية.'
+                      icon_url: 'https://api.iconify.design/lucide:heart-pulse.svg'
+                      sort_order: 8
+                      pwas_count: 1
+                      children: []
+                    -
+                      id: 9
+                      name: Tools
+                      name_ar: أدوات
+                      slug: tools
+                      description: 'حاسبات، محولات عملات ووحدات، وأدوات مساعدة يومية.'
+                      icon_url: 'https://api.iconify.design/lucide:wrench.svg'
+                      sort_order: 9
+                      pwas_count: 2
+                      children: []
+                    -
+                      id: 10
+                      name: Finance
+                      name_ar: مالية
+                      slug: finance
+                      description: 'إدارة الميزانية الشخصية، تتبع المصروفات، وأدوات الاستثمار والعملات.'
+                      icon_url: 'https://api.iconify.design/lucide:wallet.svg'
+                      sort_order: 10
+                      pwas_count: 2
+                      children: []
+                  errors: null
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: 'Operation completed successfully.'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: Games
+                        name_ar: ألعاب
+                        slug: games
+                        description: 'أفضل ألعاب الويب التقدمية الخفيفة والممتعة المتاحة للعب فوراً بدون تحميل مساحة إضافية.'
+                        icon_url: 'https://api.iconify.design/lucide:gamepad-2.svg'
+                        sort_order: 1
+                        pwas_count: 2
+                        children: []
+                      -
+                        id: 2
+                        name: Education
+                        name_ar: تعليم
+                        slug: education
+                        description: 'تطبيقات تعليمية، دورات تدريبية، وأدوات تعلّم اللغات والعلوم.'
+                        icon_url: 'https://api.iconify.design/lucide:graduation-cap.svg'
+                        sort_order: 2
+                        pwas_count: 2
+                        children: []
+                      -
+                        id: 3
+                        name: Productivity
+                        name_ar: إنتاجية
+                        slug: productivity
+                        description: 'أدوات إدارة المهام، تدوين الملاحظات، وجدولة المواعيد لزيادة فاعليتك اليومية.'
+                        icon_url: 'https://api.iconify.design/lucide:check-square.svg'
+                        sort_order: 3
+                        pwas_count: 1
+                        children: []
+                      -
+                        id: 4
+                        name: 'Social Media'
+                        name_ar: 'تواصل اجتماعي'
+                        slug: social
+                        description: 'منصات التواصل، المحادثات، وبناء المجتمعات الرقمية.'
+                        icon_url: 'https://api.iconify.design/lucide:users.svg'
+                        sort_order: 4
+                        pwas_count: 1
+                        children: []
+                      -
+                        id: 5
+                        name: Entertainment
+                        name_ar: ترفيه
+                        slug: entertainment
+                        description: 'تطبيقات البودكاست، الموسيقى، الفيديوهات والراديو.'
+                        icon_url: 'https://api.iconify.design/lucide:tv.svg'
+                        sort_order: 5
+                        pwas_count: 1
+                        children: []
+                      -
+                        id: 6
+                        name: News
+                        name_ar: أخبار
+                        slug: news
+                        description: 'متابعة الأخبار العربية والعالمية لحظة بلحظة مع تجربة قراءة سريعة.'
+                        icon_url: 'https://api.iconify.design/lucide:newspaper.svg'
+                        sort_order: 6
+                        pwas_count: 1
+                        children: []
+                      -
+                        id: 7
+                        name: Shopping
+                        name_ar: تسوق
+                        slug: shopping
+                        description: 'متاجر إلكترونية تقدمية للتسوق وشراء المنتجات بسهولة وسرعة فائقة.'
+                        icon_url: 'https://api.iconify.design/lucide:shopping-bag.svg'
+                        sort_order: 7
+                        pwas_count: 1
+                        children: []
+                      -
+                        id: 8
+                        name: 'Health & Fitness'
+                        name_ar: 'صحة ولياقة'
+                        slug: health-fitness
+                        description: 'تتبع التمارين، الحمية الغذائية، والصحة العامة والنفسية.'
+                        icon_url: 'https://api.iconify.design/lucide:heart-pulse.svg'
+                        sort_order: 8
+                        pwas_count: 1
+                        children: []
+                      -
+                        id: 9
+                        name: Tools
+                        name_ar: أدوات
+                        slug: tools
+                        description: 'حاسبات، محولات عملات ووحدات، وأدوات مساعدة يومية.'
+                        icon_url: 'https://api.iconify.design/lucide:wrench.svg'
+                        sort_order: 9
+                        pwas_count: 2
+                        children: []
+                      -
+                        id: 10
+                        name: Finance
+                        name_ar: مالية
+                        slug: finance
+                        description: 'إدارة الميزانية الشخصية، تتبع المصروفات، وأدوات الاستثمار والعملات.'
+                        icon_url: 'https://api.iconify.design/lucide:wallet.svg'
+                        sort_order: 10
+                        pwas_count: 2
+                        children: []
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: Games
+                        name_ar:
+                          type: string
+                          example: ألعاب
+                        slug:
+                          type: string
+                          example: games
+                        description:
+                          type: string
+                          example: 'أفضل ألعاب الويب التقدمية الخفيفة والممتعة المتاحة للعب فوراً بدون تحميل مساحة إضافية.'
+                        icon_url:
+                          type: string
+                          example: 'https://api.iconify.design/lucide:gamepad-2.svg'
+                        sort_order:
+                          type: integer
+                          example: 1
+                        pwas_count:
+                          type: integer
+                          example: 2
+                        children:
+                          type: array
+                          example: []
+                  errors:
+                    type: string
+                    example: null
+                    nullable: true
+      tags:
+        - 'التصنيفات (Categories)'
+      security: []
+  /api/v1/me/installations:
+    get:
+      summary: 'Get paginated list of installed PWAs for the authenticated user.'
+      operationId: getPaginatedListOfInstalledPWAsForTheAuthenticatedUser
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Authentication is required to access this resource.'
+                  data: null
+                  errors: null
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'Authentication is required to access this resource.'
+                  data:
+                    type: string
+                    example: null
+                    nullable: true
+                  errors:
+                    type: string
+                    example: null
+                    nullable: true
+      tags:
+        - 'التثبيت (Installations)'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                per_page:
+                  type: integer
+                  description: 'Must be at least 1. Must not be greater than 50.'
+                  example: 1
+                page:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 22
+      security: []
+  '/api/v1/pwas/{slug}/install':
+    post:
+      summary: 'Install a PWA for the authenticated user.'
+      operationId: installAPWAForTheAuthenticatedUser
+      description: 'Idempotent: 201 on new install, 200 if already installed.'
+      parameters: []
+      responses: {}
+      tags:
+        - 'التثبيت (Installations)'
+      security: []
+    parameters:
+      -
+        in: path
+        name: slug
+        description: 'The slug of the pwa.'
+        example: salati-qibla
+        required: true
+        schema:
+          type: string
+  '/api/v1/reviews/{id}':
+    put:
+      summary: 'Update an existing review owned by the authenticated user.'
+      operationId: updateAnExistingReviewOwnedByTheAuthenticatedUser
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - 'المراجعات والتقييمات (Reviews)'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rating:
+                  type: integer
+                  description: 'Must be between 1 and 5.'
+                  example: 2
+                title:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: 'n'
+                  nullable: true
+                content:
+                  type: string
+                  description: 'Must not be greater than 2000 characters.'
+                  example: g
+                  nullable: true
+      security: []
+    delete:
+      summary: 'Soft delete a review owned by the authenticated user.'
+      operationId: softDeleteAReviewOwnedByTheAuthenticatedUser
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - 'المراجعات والتقييمات (Reviews)'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the review.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/v1/developer/dashboard:
+    get:
+      summary: 'Get aggregate metrics and top items for the developer dashboard.'
+      operationId: getAggregateMetricsAndTopItemsForTheDeveloperDashboard
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Authentication is required to access this resource.'
+                  data: null
+                  errors: null
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'Authentication is required to access this resource.'
+                  data:
+                    type: string
+                    example: null
+                    nullable: true
+                  errors:
+                    type: string
+                    example: null
+                    nullable: true
+      tags:
+        - 'لوحة تحكم المطور (Developer Dashboard)'
+      security: []
+  /api/v1/developer/pwas:
+    get:
+      summary: 'Get paginated list of PWAs owned by the authenticated developer.'
+      operationId: getPaginatedListOfPWAsOwnedByTheAuthenticatedDeveloper
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Authentication is required to access this resource.'
+                  data: null
+                  errors: null
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'Authentication is required to access this resource.'
+                  data:
+                    type: string
+                    example: null
+                    nullable: true
+                  errors:
+                    type: string
+                    example: null
+                    nullable: true
+      tags:
+        - 'إدارة تطبيقات المطور (Developer PWAs)'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: ''
+                  example: pending
+                  enum:
+                    - draft
+                    - pending
+                    - approved
+                    - rejected
+                  nullable: true
+                search:
+                  type: string
+                  description: 'Must be at least 2 characters. Must not be greater than 100 characters.'
+                  example: b
+                  nullable: true
+                per_page:
+                  type: integer
+                  description: 'Must be at least 1. Must not be greater than 50.'
+                  example: 22
+                page:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 67
+      security: []
+    post:
+      summary: 'Submit a new PWA for review.'
+      operationId: submitANewPWAForReview
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - 'إدارة تطبيقات المطور (Developer PWAs)'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: b
+                category_id:
+                  type: integer
+                  description: 'Must match an existing stored value.'
+                  example: 16
+                short_description:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'n'
+                description:
+                  type: string
+                  description: ''
+                  example: 'Eius et animi quos velit et.'
+                  nullable: true
+                manifest_url:
+                  type: string
+                  description: 'Must be a valid URL. Must start with one of <code>https://</code> Must not be greater than 500 characters.'
+                  example: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
+                start_url:
+                  type: string
+                  description: 'Must be a valid URL. Must start with one of <code>https://</code> Must not be greater than 500 characters.'
+                  example: 'http://swift.com/quidem-nostrum-qui-commodi-incidunt-iure-odit.html'
+                icon_url:
+                  type: string
+                  description: 'Must be a valid URL. Must start with one of <code>https://</code> Must not be greater than 500 characters.'
+                  example: 'https://www.leuschke.info/nostrum-omnis-autem-et-consequatur-aut'
+                  nullable: true
+                screenshots:
+                  type: array
+                  description: 'Must be a valid URL. Must start with one of <code>https://</code> Must not be greater than 500 characters.'
+                  example:
+                    - z
+                  items:
+                    type: string
+                version:
+                  type: string
+                  description: 'Must match the regex /^\d+\.\d+\.\d+$/.'
+                  example: 425.59.3
+                  nullable: true
+              required:
+                - name
+                - category_id
+                - short_description
+                - manifest_url
+                - start_url
+                - screenshots
+      security: []
+  '/api/v1/developer/pwas/{id}':
+    put:
+      summary: 'Update an existing PWA (draft or rejected only).'
+      operationId: updateAnExistingPWAdraftOrRejectedOnly
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - 'إدارة تطبيقات المطور (Developer PWAs)'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 150 characters.'
+                  example: b
+                category_id:
+                  type: integer
+                  description: 'Must match an existing stored value.'
+                  example: 16
+                short_description:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'n'
+                description:
+                  type: string
+                  description: ''
+                  example: 'Eius et animi quos velit et.'
+                  nullable: true
+                manifest_url:
+                  type: string
+                  description: 'Must be a valid URL. Must start with one of <code>https://</code> Must not be greater than 500 characters.'
+                  example: 'http://www.ernser.org/harum-mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html'
+                start_url:
+                  type: string
+                  description: 'Must be a valid URL. Must start with one of <code>https://</code> Must not be greater than 500 characters.'
+                  example: 'http://swift.com/quidem-nostrum-qui-commodi-incidunt-iure-odit.html'
+                icon_url:
+                  type: string
+                  description: 'Must be a valid URL. Must start with one of <code>https://</code> Must not be greater than 500 characters.'
+                  example: 'https://www.leuschke.info/nostrum-omnis-autem-et-consequatur-aut'
+                  nullable: true
+                screenshots:
+                  type: array
+                  description: 'Must be a valid URL. Must start with one of <code>https://</code> Must not be greater than 500 characters.'
+                  example:
+                    - z
+                  items:
+                    type: string
+                version:
+                  type: string
+                  description: 'Must match the regex /^\d+\.\d+\.\d+$/.'
+                  example: 425.59.3
+                  nullable: true
+              required:
+                - screenshots
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the pwa.'
+        example: salati-qibla
+        required: true
+        schema:
+          type: string
+  '/api/v1/developer/pwas/{id}/resubmit':
+    post:
+      summary: 'Resubmit a rejected or draft PWA for review.'
+      operationId: resubmitARejectedOrDraftPWAForReview
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - 'إدارة تطبيقات المطور (Developer PWAs)'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the pwa.'
+        example: salati-qibla
+        required: true
+        schema:
+          type: string
+  /api/v1/moderator/pwas/pending:
+    get:
+      summary: 'Get pending PWAs for review in FIFO order.'
+      operationId: getPendingPWAsForReviewInFIFOOrder
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Authentication is required to access this resource.'
+                  data: null
+                  errors: null
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'Authentication is required to access this resource.'
+                  data:
+                    type: string
+                    example: null
+                    nullable: true
+                  errors:
+                    type: string
+                    example: null
+                    nullable: true
+      tags:
+        - 'بوابة المشرف (Moderator Portal)'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                search:
+                  type: string
+                  description: 'Must be at least 2 characters. Must not be greater than 100 characters.'
+                  example: b
+                  nullable: true
+                per_page:
+                  type: integer
+                  description: 'Must be at least 1. Must not be greater than 50.'
+                  example: 22
+                page:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 67
+      security: []
+  '/api/v1/moderator/pwas/{id}':
+    get:
+      summary: 'Get details of a PWA for moderator review.'
+      operationId: getDetailsOfAPWAForModeratorReview
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Authentication is required to access this resource.'
+                  data: null
+                  errors: null
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'Authentication is required to access this resource.'
+                  data:
+                    type: string
+                    example: null
+                    nullable: true
+                  errors:
+                    type: string
+                    example: null
+                    nullable: true
+      tags:
+        - 'بوابة المشرف (Moderator Portal)'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the pwa.'
+        example: salati-qibla
+        required: true
+        schema:
+          type: string
+  '/api/v1/moderator/pwas/{id}/approve':
+    post:
+      summary: 'Approve a pending PWA and publish it.'
+      operationId: approveAPendingPWAAndPublishIt
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - 'بوابة المشرف (Moderator Portal)'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the pwa.'
+        example: salati-qibla
+        required: true
+        schema:
+          type: string
+  '/api/v1/moderator/pwas/{id}/reject':
+    post:
+      summary: 'Reject a pending PWA with reason.'
+      operationId: rejectAPendingPWAWithReason
+      description: ''
+      parameters: []
+      responses: {}
+      tags:
+        - 'بوابة المشرف (Moderator Portal)'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: 'Must be at least 10 characters. Must not be greater than 1000 characters.'
+                  example: b
+              required:
+                - reason
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the pwa.'
+        example: salati-qibla
+        required: true
+        schema:
+          type: string

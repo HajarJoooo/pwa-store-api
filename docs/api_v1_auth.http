@@ -1,0 +1,194 @@
+### PWA Store API v1 - Auth Endpoints
+@baseUrl = http://localhost:8000/api/v1
+@contentType = application/json
+@accept = application/json
+@acceptLanguage = ar
+
+### 1. Register as User
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+Accept: {{accept}}
+Accept-Language: {{acceptLanguage}}
+
+{
+    "first_name": "سعد",
+    "last_name": "الغامدي",
+    "username": "saad_user",
+    "email": "saad@example.com",
+    "password": "Password123!",
+    "password_confirmation": "Password123!",
+    "phone": "+966501112233",
+    "role": "user"
+}
+
+# Response 201 Created:
+# {
+#   "success": true,
+#   "message": "تم إنشاء الحساب بنجاح.",
+#   "data": {
+#     "user": {
+#       "id": 1,
+#       "first_name": "سعد",
+#       "last_name": "الغامدي",
+#       "full_name": "سعد الغامدي",
+#       "username": "saad_user",
+#       "email": "saad@example.com",
+#       "phone": "+966501112233",
+#       "roles": ["user"],
+#       "permissions": ["pwas.install", "reviews.create", "reviews.update-own", "reviews.delete-own"]
+#     },
+#     "token": "<TOKEN>",
+#     "token_type": "Bearer"
+#   },
+#   "errors": null
+# }
+
+### 2. Register as Developer
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+Accept: {{accept}}
+Accept-Language: {{acceptLanguage}}
+
+{
+    "first_name": "ياسر",
+    "last_name": "التقني",
+    "username": "yasser_dev",
+    "email": "yasser@example.com",
+    "password": "Password123!",
+    "password_confirmation": "Password123!",
+    "role": "developer"
+}
+
+### 3. Register Validation Error (422) - Duplicate / Invalid Role
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+Accept: {{accept}}
+Accept-Language: {{acceptLanguage}}
+
+{
+    "first_name": "محمد",
+    "last_name": "المشرف",
+    "username": "saad_user",
+    "email": "saad@example.com",
+    "password": "pass",
+    "password_confirmation": "different",
+    "role": "moderator"
+}
+
+# Response 422 Unprocessable Entity:
+# {
+#   "success": false,
+#   "message": "بيانات الإدخال غير صالحة، يرجى تصحيح الأخطاء.",
+#   "data": null,
+#   "errors": {
+#     "username": ["قيمة اسم المستخدم مستخدمة بالفعل وغير متاحة."],
+#     "email": ["قيمة البريد الإلكتروني مستخدمة بالفعل وغير متاحة."],
+#     "password": [
+#       "يجب أن يتكون كلمة المرور من 8 أحرف على الأقل.",
+#       "حقل تأكيد كلمة المرور غير متطابق."
+#     ],
+#     "role": ["القيمة المحددة لـ نوع الحساب غير صالحة."]
+#   }
+# }
+
+### 4. Login with Email or Username
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+Accept: {{accept}}
+Accept-Language: {{acceptLanguage}}
+
+{
+    "login": "saad@example.com",
+    "password": "Password123!"
+}
+
+# Response 200 OK:
+# {
+#   "success": true,
+#   "message": "تم تسجيل الدخول بنجاح.",
+#   "data": {
+#     "user": {
+#       "id": 1,
+#       "username": "saad_user",
+#       "email": "saad@example.com",
+#       "roles": ["user"],
+#       "permissions": [...]
+#     },
+#     "token": "<TOKEN>",
+#     "token_type": "Bearer"
+#   },
+#   "errors": null
+# }
+
+### 5. Login Unauthorized Error (401) - Wrong Password
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+Accept: {{accept}}
+Accept-Language: {{acceptLanguage}}
+
+{
+    "login": "saad@example.com",
+    "password": "WrongPassword999!"
+}
+
+# Response 401 Unauthorized:
+# {
+#   "success": false,
+#   "message": "بيانات الاعتماد المدخلة غير صحيحة.",
+#   "data": null,
+#   "errors": null
+# }
+
+### 6. Login Rate Limited Error (429) - 6th failed attempt within a minute
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+Accept: {{accept}}
+Accept-Language: {{acceptLanguage}}
+
+{
+    "login": "saad@example.com",
+    "password": "WrongPassword999!"
+}
+
+# Response 429 Too Many Requests:
+# {
+#   "success": false,
+#   "message": "تجاوزت الحد المسموح به من المحاولات، يرجى الانتظار قليلاً والمحاولة لاحقاً.",
+#   "data": null,
+#   "errors": null
+# }
+
+### 7. Get Current Profile (Me)
+@authToken = <TOKEN>
+GET {{baseUrl}}/auth/me
+Accept: {{accept}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### 8. Unauthenticated Error (401) - Missing or Invalid Token
+GET {{baseUrl}}/auth/me
+Accept: {{accept}}
+Accept-Language: {{acceptLanguage}}
+
+# Response 401 Unauthorized:
+# {
+#   "success": false,
+#   "message": "يجب تسجيل الدخول للوصول إلى هذا المورد.",
+#   "data": null,
+#   "errors": null
+# }
+
+### 9. Logout
+POST {{baseUrl}}/auth/logout
+Accept: {{accept}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+# Response 200 OK:
+# {
+#   "success": true,
+#   "message": "تم تسجيل الخروج بنجاح.",
+#   "data": null,
+#   "errors": null
+# }

@@ -1,0 +1,250 @@
+### ==============================================================================
+### PWA Store API - Phase 7: Moderator Portal & Content Review
+### Base URL: http://localhost:8000/api/v1/moderator
+### All routes require Bearer Token (Sanctum) with 'moderator' or 'admin' role
+### Decision routes are rate-limited via throttle:write (30 req/min)
+### ==============================================================================
+
+@baseUrl = http://localhost:8000/api/v1/moderator
+@contentType = application/json
+@acceptJson = application/json
+@acceptLanguage = ar
+@authToken = <TOKEN>
+
+### ------------------------------------------------------------------------------
+### 1. GET /moderator/pwas/pending - قائمة التطبيقات المعلقة قيد المراجعة (FIFO)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas/pending?per_page=12&page=1
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تمت العملية بنجاح.",
+#   "data": [
+#     {
+#       "id": 24,
+#       "name": "تطبيق المفكرة الذكية",
+#       "slug": "smart-notes-app",
+#       "short_description": "تطبيق ويب تقدمي لتدوين الملاحظات وتنظيم المواعيد",
+#       "description": "وصف مفصل يوضح الميزات الفنية وطريقة تشغيل التطبيق دون اتصال بالإنترنت.",
+#       "manifest_url": "https://notes.example.com/manifest.json",
+#       "start_url": "https://notes.example.com/",
+#       "icon_url": "https://notes.example.com/icons/icon-512.png",
+#       "screenshots": [
+#         "https://notes.example.com/screens/shot1.png"
+#       ],
+#       "version": "1.0.0",
+#       "status": "pending",
+#       "is_published": false,
+#       "rejection_reason": null,
+#       "reviewed_at": null,
+#       "category": {
+#         "id": 1,
+#         "name": "Productivity",
+#         "name_ar": "الإنتاجية",
+#         "slug": "productivity"
+#       },
+#       "developer": {
+#         "id": 7,
+#         "first_name": "سعد",
+#         "last_name": "الغامدي",
+#         "username": "saad_dev"
+#       },
+#       "created_at": "2026-11-16T14:00:00.000000Z",
+#       "updated_at": "2026-11-16T14:00:00.000000Z"
+#     }
+#   ],
+#   "meta": {
+#     "current_page": 1,
+#     "per_page": 12,
+#     "total": 1,
+#     "last_page": 1
+#   },
+#   "links": {
+#     "first": "http://localhost:8000/api/v1/moderator/pwas/pending?page=1",
+#     "last": "http://localhost:8000/api/v1/moderator/pwas/pending?page=1",
+#     "prev": null,
+#     "next": null
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 2. GET /moderator/pwas/{id} - تفاصيل تطبيق محدد للمراجعة والتدقيق
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas/24
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تمت العملية بنجاح.",
+#   "data": {
+#     "id": 24,
+#     "name": "تطبيق المفكرة الذكية",
+#     "slug": "smart-notes-app",
+#     "short_description": "تطبيق ويب تقدمي لتدوين الملاحظات وتنظيم المواعيد",
+#     "description": "وصف مفصل يوضح الميزات الفنية وطريقة تشغيل التطبيق دون اتصال بالإنترنت.",
+#     "manifest_url": "https://notes.example.com/manifest.json",
+#     "start_url": "https://notes.example.com/",
+#     "icon_url": "https://notes.example.com/icons/icon-512.png",
+#     "screenshots": [
+#       "https://notes.example.com/screens/shot1.png"
+#     ],
+#     "version": "1.0.0",
+#     "status": "pending",
+#     "is_published": false,
+#     "rejection_reason": null,
+#     "reviewed_at": null,
+#     "category": {
+#       "id": 1,
+#       "name": "Productivity",
+#       "name_ar": "الإنتاجية",
+#       "slug": "productivity"
+#     },
+#     "developer": {
+#       "id": 7,
+#       "first_name": "سعد",
+#       "last_name": "الغامدي",
+#       "username": "saad_dev"
+#     },
+#     "created_at": "2026-11-16T14:00:00.000000Z",
+#     "updated_at": "2026-11-16T14:00:00.000000Z"
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 3. POST /moderator/pwas/{id}/approve - الموافقة على التطبيق ونشره (200 OK)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/24/approve
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تمت الموافقة على التطبيق ونشره بنجاح.",
+#   "data": {
+#     "id": 24,
+#     "name": "تطبيق المفكرة الذكية",
+#     "slug": "smart-notes-app",
+#     "status": "approved",
+#     "is_published": true,
+#     "rejection_reason": null,
+#     "reviewed_at": "2026-11-16T16:00:00.000000Z"
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 4. POST /moderator/pwas/{id}/reject - رفض التطبيق مع تسجيل السبب وتطهيره (200 OK)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/25/reject
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "reason": "يرجى توفير أيقونة ذات أبعاد 512x512 بدقة عالية، وتوضيح سياسة الخصوصية داخل التطبيق."
+}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تم رفض التطبيق بنجاح وتسجيل السبب.",
+#   "data": {
+#     "id": 25,
+#     "name": "تطبيق تجريبي مرفوض",
+#     "slug": "sample-rejected-app",
+#     "status": "rejected",
+#     "is_published": false,
+#     "rejection_reason": "يرجى توفير أيقونة ذات أبعاد 512x512 بدقة عالية، وتوضيح سياسة الخصوصية داخل التطبيق.",
+#     "reviewed_at": "2026-11-16T16:05:00.000000Z"
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 5. POST /moderator/pwas/{id}/approve - خطأ محاولة قبول تطبيق غير معلق (422)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/24/approve
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "بيانات الإدخال غير صالحة، يرجى تصحيح الأخطاء.",
+#   "data": null,
+#   "errors": {
+#     "status": [
+#       "هذا التطبيق ليس قيد المراجعة حالياً."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 6. POST /moderator/pwas/{id}/reject - خطأ سبب الرفض غير مكتمل أو مفقود (422)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/25/reject
+Content-Type: {{contentType}}
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+{
+  "reason": "قصير"
+}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "بيانات الإدخال غير صالحة، يرجى تصحيح الأخطاء.",
+#   "data": null,
+#   "errors": {
+#     "reason": [
+#       "يجب أن يتكون سبب الرفض من 10 أحرف على الأقل."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 7. POST /moderator/pwas/{id}/approve - خطأ مراجعة المشرف لتطبيقه الخاص (403)
+### ------------------------------------------------------------------------------
+POST {{baseUrl}}/pwas/30/approve
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 403 Forbidden
+# {
+#   "success": false,
+#   "message": "لا يمكنك مراجعة أو تغيير حالة تطبيق تملكه.",
+#   "data": null,
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 8. GET /moderator/pwas/pending - خطأ غير مصرح (403 Forbidden - Role: developer)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas/pending
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+Authorization: Bearer {{authToken}}
+
+### Response: 403 Forbidden
+# {
+#   "success": false,
+#   "message": "ليس لديك الصلاحية الكافية لتنفيذ هذا الإجراء.",
+#   "data": null,
+#   "errors": null
+# }

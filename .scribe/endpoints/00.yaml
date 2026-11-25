@@ -1,0 +1,260 @@
+name: 'المصادقة (Authentication)'
+description: |-
+
+  نقاط نهاية إدارة المصادقة، تسجيل المستخدمين والمطورين، تسجيل الدخول، واسترجاع بيانات الملف الشخصي ورموز الوصول.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/auth/register
+    metadata:
+      custom: []
+      groupName: 'المصادقة (Authentication)'
+      groupDescription: |-
+
+        نقاط نهاية إدارة المصادقة، تسجيل المستخدمين والمطورين، تسجيل الدخول، واسترجاع بيانات الملف الشخصي ورموز الوصول.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Register a new user with user or developer role.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      first_name:
+        custom: []
+        name: first_name
+        description: 'Must match the regex /^[\p{L}\p{M}\s''.\-]+$/u. يجب ألا يتجاوز طول value 100 حرفاً.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      last_name:
+        custom: []
+        name: last_name
+        description: 'Must match the regex /^[\p{L}\p{M}\s''.\-]+$/u. يجب ألا يتجاوز طول value 100 حرفاً.'
+        required: true
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      username:
+        custom: []
+        name: username
+        description: 'Must contain only letters, numbers, dashes and underscores. يجب ألا يتجاوز طول value 50 حرفاً.'
+        required: true
+        example: g
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'يجب أن يكون value عنوان بريد إلكتروني صالحاً. يجب ألا يتجاوز طول value 255 حرفاً.'
+        required: true
+        example: rowan.gulgowski@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'يجب أن يتكون value من 8 أحرف على الأقل. يجب ألا يتجاوز طول value 72 حرفاً.'
+        required: true
+        example: 'BNvYgxwmi/#iw/kX'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      phone:
+        custom: []
+        name: phone
+        description: 'يجب ألا يتجاوز طول value 30 حرفاً.'
+        required: false
+        example: w
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      role:
+        custom: []
+        name: role
+        description: ''
+        required: true
+        example: developer
+        type: string
+        enumValues:
+          - user
+          - developer
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      first_name: b
+      last_name: 'n'
+      username: g
+      email: rowan.gulgowski@example.com
+      password: 'BNvYgxwmi/#iw/kX'
+      phone: w
+      role: developer
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/auth/login
+    metadata:
+      custom: []
+      groupName: 'المصادقة (Authentication)'
+      groupDescription: |-
+
+        نقاط نهاية إدارة المصادقة، تسجيل المستخدمين والمطورين، تسجيل الدخول، واسترجاع بيانات الملف الشخصي ورموز الوصول.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Authenticate user by email or username.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      login:
+        custom: []
+        name: login
+        description: 'يجب ألا يتجاوز طول value 255 حرفاً.'
+        required: true
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'يجب ألا يتجاوز طول value 255 حرفاً.'
+        required: true
+        example: ']|{+-0pBNvYg'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      login: b
+      password: ']|{+-0pBNvYg'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/auth/me
+    metadata:
+      custom: []
+      groupName: 'المصادقة (Authentication)'
+      groupDescription: |-
+
+        نقاط نهاية إدارة المصادقة، تسجيل المستخدمين والمطورين، تسجيل الدخول، واسترجاع بيانات الملف الشخصي ورموز الوصول.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Return authenticated user profile.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"success":false,"message":"Authentication is required to access this resource.","data":null,"errors":null}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          content-language: en
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/auth/logout
+    metadata:
+      custom: []
+      groupName: 'المصادقة (Authentication)'
+      groupDescription: |-
+
+        نقاط نهاية إدارة المصادقة، تسجيل المستخدمين والمطورين، تسجيل الدخول، واسترجاع بيانات الملف الشخصي ورموز الوصول.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Revoke the current access token.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

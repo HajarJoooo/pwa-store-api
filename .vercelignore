@@ -1,0 +1,11 @@
+.git
+.github
+.agents
+.ai
+.gemini
+tests
+docker-compose*.yml
+Dockerfile
+.env*
+node_modules
+vendor

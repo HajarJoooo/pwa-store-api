@@ -1,0 +1,1204 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "https:\/\/pwa-store-api.vercel.app"
+        }
+    ],
+    "info": {
+        "name": "\u062a\u0648\u062b\u064a\u0642 \u0648\u0627\u062c\u0647\u0629 \u0628\u0631\u0645\u062c\u0629 \u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0645\u062a\u062c\u0631 PWA (PWA Store API)",
+        "_postman_id": "c8712339-e569-4b28-8965-a2aa4d38ee22",
+        "description": "\u0648\u0627\u062c\u0647\u0629 \u0628\u0631\u0645\u062c\u0629 \u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0645\u062a\u062c\u0631 \u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u0648\u064a\u0628 \u0627\u0644\u062a\u0642\u062f\u0645\u064a\u0629 (PWA Store) - \u0627\u0644\u0646\u0633\u062e\u0629 v1. \u062a\u0648\u0641\u0631 \u0648\u0627\u062c\u0647\u0627\u062a RESTful \u0645\u062a\u0643\u0627\u0645\u0644\u0629 \u0644\u0644\u0645\u0635\u0627\u062f\u0642\u0629 \u0648\u062a\u0635\u0641\u062d \u0627\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0648\u0627\u0644\u062a\u0635\u0646\u064a\u0641\u0627\u062a \u0648\u062a\u062b\u0628\u064a\u062a \u0627\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0648\u0625\u062f\u0627\u0631\u062a\u0647\u0627 \u0648\u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0627\u062a \u0648\u0644\u0648\u062d\u0629 \u062a\u062d\u0643\u0645 \u0627\u0644\u0645\u0637\u0648\u0631\u064a\u0646 \u0648\u0628\u0648\u0627\u0628\u0629 \u0627\u0644\u0625\u0634\u0631\u0627\u0641 \u0648\u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629.",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "\u0627\u0644\u0645\u0635\u0627\u062f\u0642\u0629 (Authentication)",
+            "description": "\n\u0646\u0642\u0627\u0637 \u0646\u0647\u0627\u064a\u0629 \u0625\u062f\u0627\u0631\u0629 \u0627\u0644\u0645\u0635\u0627\u062f\u0642\u0629\u060c \u062a\u0633\u062c\u064a\u0644 \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u064a\u0646 \u0648\u0627\u0644\u0645\u0637\u0648\u0631\u064a\u0646\u060c \u062a\u0633\u062c\u064a\u0644 \u0627\u0644\u062f\u062e\u0648\u0644\u060c \u0648\u0627\u0633\u062a\u0631\u062c\u0627\u0639 \u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0645\u0644\u0641 \u0627\u0644\u0634\u062e\u0635\u064a \u0648\u0631\u0645\u0648\u0632 \u0627\u0644\u0648\u0635\u0648\u0644.",
+            "item": [
+                {
+                    "name": "Register a new user with user or developer role.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"first_name\":\"b\",\"last_name\":\"n\",\"username\":\"g\",\"email\":\"rowan.gulgowski@example.com\",\"password\":\"BNvYgxwmi\\\/#iw\\\/kX\",\"phone\":\"w\",\"role\":\"developer\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Authenticate user by email or username.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"login\":\"b\",\"password\":\"]|{+-0pBNvYg\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Return authenticated user profile.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/me",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/me"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "content-language",
+                                    "value": "en"
+                                },
+                                {
+                                    "key": "x-content-type-options",
+                                    "value": "nosniff"
+                                },
+                                {
+                                    "key": "x-frame-options",
+                                    "value": "DENY"
+                                },
+                                {
+                                    "key": "referrer-policy",
+                                    "value": "no-referrer"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"success\":false,\"message\":\"Authentication is required to access this resource.\",\"data\":null,\"errors\":null}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Revoke the current access token.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "\u0627\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u0639\u0627\u0645\u0629 (Public PWAs)",
+            "description": "\n\u062a\u0635\u0641\u062d \u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u0648\u064a\u0628 \u0627\u0644\u062a\u0642\u062f\u0645\u064a\u0629 \u0627\u0644\u0645\u0646\u0634\u0648\u0631\u0629\u060c \u0627\u0644\u0628\u062d\u062b\u060c \u0627\u0644\u062a\u0635\u0641\u064a\u0629 \u062d\u0633\u0628 \u0627\u0644\u062a\u0635\u0646\u064a\u0641\u060c \u0648\u0639\u0631\u0636 \u0627\u0644\u062a\u0641\u0627\u0635\u064a\u0644 \u0648\u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0627\u062a \u062f\u0648\u0646 \u062d\u0627\u062c\u0629 \u0644\u062a\u0633\u062c\u064a\u0644 \u0627\u0644\u062f\u062e\u0648\u0644.",
+            "item": [
+                {
+                    "name": "Browse and search published PWAs with pagination and filters.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/pwas",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/pwas"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"search\":\"b\",\"category\":\"architecto\",\"sort\":\"top_rated\",\"per_page\":22,\"page\":7}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "59"
+                                },
+                                {
+                                    "key": "content-language",
+                                    "value": "en"
+                                },
+                                {
+                                    "key": "x-content-type-options",
+                                    "value": "nosniff"
+                                },
+                                {
+                                    "key": "x-frame-options",
+                                    "value": "DENY"
+                                },
+                                {
+                                    "key": "referrer-policy",
+                                    "value": "no-referrer"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 422,
+                            "body": "{\"success\":false,\"message\":\"The given data was invalid.\",\"data\":null,\"errors\":{\"search\":[\"The search field must be at least 2 characters.\"],\"category\":[\"The selected category is invalid.\"]}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display published PWA details by slug.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/pwas\/:slug",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/pwas\/:slug",
+                            "variable": [
+                                {
+                                    "id": "slug",
+                                    "key": "slug",
+                                    "value": "architecto",
+                                    "description": "The slug of the pwa."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "59"
+                                },
+                                {
+                                    "key": "content-language",
+                                    "value": "en"
+                                },
+                                {
+                                    "key": "x-content-type-options",
+                                    "value": "nosniff"
+                                },
+                                {
+                                    "key": "x-frame-options",
+                                    "value": "DENY"
+                                },
+                                {
+                                    "key": "referrer-policy",
+                                    "value": "no-referrer"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\"success\":false,\"message\":\"The requested resource was not found.\",\"data\":null,\"errors\":null}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "List approved reviews for a published PWA.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/pwas\/:slug\/reviews",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/pwas\/:slug\/reviews",
+                            "variable": [
+                                {
+                                    "id": "slug",
+                                    "key": "slug",
+                                    "value": "salati-qibla",
+                                    "description": "The slug of the pwa."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"sort\":\"helpful\",\"per_page\":1,\"page\":22}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "59"
+                                },
+                                {
+                                    "key": "content-language",
+                                    "value": "en"
+                                },
+                                {
+                                    "key": "x-content-type-options",
+                                    "value": "nosniff"
+                                },
+                                {
+                                    "key": "x-frame-options",
+                                    "value": "DENY"
+                                },
+                                {
+                                    "key": "referrer-policy",
+                                    "value": "no-referrer"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"message\":\"Operation completed successfully.\",\"data\":[],\"meta\":{\"current_page\":22,\"per_page\":1,\"total\":3,\"last_page\":3},\"links\":{\"first\":\"https:\\\/\\\/pwa-store-api.vercel.app\\\/api\\\/v1\\\/pwas\\\/salati-qibla\\\/reviews?page=1\",\"last\":\"https:\\\/\\\/pwa-store-api.vercel.app\\\/api\\\/v1\\\/pwas\\\/salati-qibla\\\/reviews?page=3\",\"prev\":\"https:\\\/\\\/pwa-store-api.vercel.app\\\/api\\\/v1\\\/pwas\\\/salati-qibla\\\/reviews?page=21\",\"next\":null},\"errors\":null}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "\u0627\u0644\u062a\u0635\u0646\u064a\u0641\u0627\u062a (Categories)",
+            "description": "\n\u0627\u0633\u062a\u0631\u062c\u0627\u0639 \u0634\u062c\u0631\u0629 \u0627\u0644\u062a\u0635\u0646\u064a\u0641\u0627\u062a \u0627\u0644\u0646\u0634\u0637\u0629 \u0645\u0639 \u0639\u062f\u062f \u0627\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u0645\u0646\u0634\u0648\u0631\u0629 \u0644\u0643\u0644 \u062a\u0635\u0646\u064a\u0641 (\u0645\u062e\u0632\u0646\u0629 \u0641\u064a \u0627\u0644\u0643\u0627\u0634).",
+            "item": [
+                {
+                    "name": "List active categories tree with published PWAs count.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/categories",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/categories"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "59"
+                                },
+                                {
+                                    "key": "content-language",
+                                    "value": "en"
+                                },
+                                {
+                                    "key": "x-content-type-options",
+                                    "value": "nosniff"
+                                },
+                                {
+                                    "key": "x-frame-options",
+                                    "value": "DENY"
+                                },
+                                {
+                                    "key": "referrer-policy",
+                                    "value": "no-referrer"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"message\":\"Operation completed successfully.\",\"data\":[{\"id\":1,\"name\":\"Games\",\"name_ar\":\"\\u0623\\u0644\\u0639\\u0627\\u0628\",\"slug\":\"games\",\"description\":\"\\u0623\\u0641\\u0636\\u0644 \\u0623\\u0644\\u0639\\u0627\\u0628 \\u0627\\u0644\\u0648\\u064a\\u0628 \\u0627\\u0644\\u062a\\u0642\\u062f\\u0645\\u064a\\u0629 \\u0627\\u0644\\u062e\\u0641\\u064a\\u0641\\u0629 \\u0648\\u0627\\u0644\\u0645\\u0645\\u062a\\u0639\\u0629 \\u0627\\u0644\\u0645\\u062a\\u0627\\u062d\\u0629 \\u0644\\u0644\\u0639\\u0628 \\u0641\\u0648\\u0631\\u0627\\u064b \\u0628\\u062f\\u0648\\u0646 \\u062a\\u062d\\u0645\\u064a\\u0644 \\u0645\\u0633\\u0627\\u062d\\u0629 \\u0625\\u0636\\u0627\\u0641\\u064a\\u0629.\",\"icon_url\":\"https:\\\/\\\/api.iconify.design\\\/lucide:gamepad-2.svg\",\"sort_order\":1,\"pwas_count\":2,\"children\":[]},{\"id\":2,\"name\":\"Education\",\"name_ar\":\"\\u062a\\u0639\\u0644\\u064a\\u0645\",\"slug\":\"education\",\"description\":\"\\u062a\\u0637\\u0628\\u064a\\u0642\\u0627\\u062a \\u062a\\u0639\\u0644\\u064a\\u0645\\u064a\\u0629\\u060c \\u062f\\u0648\\u0631\\u0627\\u062a \\u062a\\u062f\\u0631\\u064a\\u0628\\u064a\\u0629\\u060c \\u0648\\u0623\\u062f\\u0648\\u0627\\u062a \\u062a\\u0639\\u0644\\u0651\\u0645 \\u0627\\u0644\\u0644\\u063a\\u0627\\u062a \\u0648\\u0627\\u0644\\u0639\\u0644\\u0648\\u0645.\",\"icon_url\":\"https:\\\/\\\/api.iconify.design\\\/lucide:graduation-cap.svg\",\"sort_order\":2,\"pwas_count\":2,\"children\":[]},{\"id\":3,\"name\":\"Productivity\",\"name_ar\":\"\\u0625\\u0646\\u062a\\u0627\\u062c\\u064a\\u0629\",\"slug\":\"productivity\",\"description\":\"\\u0623\\u062f\\u0648\\u0627\\u062a \\u0625\\u062f\\u0627\\u0631\\u0629 \\u0627\\u0644\\u0645\\u0647\\u0627\\u0645\\u060c \\u062a\\u062f\\u0648\\u064a\\u0646 \\u0627\\u0644\\u0645\\u0644\\u0627\\u062d\\u0638\\u0627\\u062a\\u060c \\u0648\\u062c\\u062f\\u0648\\u0644\\u0629 \\u0627\\u0644\\u0645\\u0648\\u0627\\u0639\\u064a\\u062f \\u0644\\u0632\\u064a\\u0627\\u062f\\u0629 \\u0641\\u0627\\u0639\\u0644\\u064a\\u062a\\u0643 \\u0627\\u0644\\u064a\\u0648\\u0645\\u064a\\u0629.\",\"icon_url\":\"https:\\\/\\\/api.iconify.design\\\/lucide:check-square.svg\",\"sort_order\":3,\"pwas_count\":1,\"children\":[]},{\"id\":4,\"name\":\"Social Media\",\"name_ar\":\"\\u062a\\u0648\\u0627\\u0635\\u0644 \\u0627\\u062c\\u062a\\u0645\\u0627\\u0639\\u064a\",\"slug\":\"social\",\"description\":\"\\u0645\\u0646\\u0635\\u0627\\u062a \\u0627\\u0644\\u062a\\u0648\\u0627\\u0635\\u0644\\u060c \\u0627\\u0644\\u0645\\u062d\\u0627\\u062f\\u062b\\u0627\\u062a\\u060c \\u0648\\u0628\\u0646\\u0627\\u0621 \\u0627\\u0644\\u0645\\u062c\\u062a\\u0645\\u0639\\u0627\\u062a \\u0627\\u0644\\u0631\\u0642\\u0645\\u064a\\u0629.\",\"icon_url\":\"https:\\\/\\\/api.iconify.design\\\/lucide:users.svg\",\"sort_order\":4,\"pwas_count\":1,\"children\":[]},{\"id\":5,\"name\":\"Entertainment\",\"name_ar\":\"\\u062a\\u0631\\u0641\\u064a\\u0647\",\"slug\":\"entertainment\",\"description\":\"\\u062a\\u0637\\u0628\\u064a\\u0642\\u0627\\u062a \\u0627\\u0644\\u0628\\u0648\\u062f\\u0643\\u0627\\u0633\\u062a\\u060c \\u0627\\u0644\\u0645\\u0648\\u0633\\u064a\\u0642\\u0649\\u060c \\u0627\\u0644\\u0641\\u064a\\u062f\\u064a\\u0648\\u0647\\u0627\\u062a \\u0648\\u0627\\u0644\\u0631\\u0627\\u062f\\u064a\\u0648.\",\"icon_url\":\"https:\\\/\\\/api.iconify.design\\\/lucide:tv.svg\",\"sort_order\":5,\"pwas_count\":1,\"children\":[]},{\"id\":6,\"name\":\"News\",\"name_ar\":\"\\u0623\\u062e\\u0628\\u0627\\u0631\",\"slug\":\"news\",\"description\":\"\\u0645\\u062a\\u0627\\u0628\\u0639\\u0629 \\u0627\\u0644\\u0623\\u062e\\u0628\\u0627\\u0631 \\u0627\\u0644\\u0639\\u0631\\u0628\\u064a\\u0629 \\u0648\\u0627\\u0644\\u0639\\u0627\\u0644\\u0645\\u064a\\u0629 \\u0644\\u062d\\u0638\\u0629 \\u0628\\u0644\\u062d\\u0638\\u0629 \\u0645\\u0639 \\u062a\\u062c\\u0631\\u0628\\u0629 \\u0642\\u0631\\u0627\\u0621\\u0629 \\u0633\\u0631\\u064a\\u0639\\u0629.\",\"icon_url\":\"https:\\\/\\\/api.iconify.design\\\/lucide:newspaper.svg\",\"sort_order\":6,\"pwas_count\":1,\"children\":[]},{\"id\":7,\"name\":\"Shopping\",\"name_ar\":\"\\u062a\\u0633\\u0648\\u0642\",\"slug\":\"shopping\",\"description\":\"\\u0645\\u062a\\u0627\\u062c\\u0631 \\u0625\\u0644\\u0643\\u062a\\u0631\\u0648\\u0646\\u064a\\u0629 \\u062a\\u0642\\u062f\\u0645\\u064a\\u0629 \\u0644\\u0644\\u062a\\u0633\\u0648\\u0642 \\u0648\\u0634\\u0631\\u0627\\u0621 \\u0627\\u0644\\u0645\\u0646\\u062a\\u062c\\u0627\\u062a \\u0628\\u0633\\u0647\\u0648\\u0644\\u0629 \\u0648\\u0633\\u0631\\u0639\\u0629 \\u0641\\u0627\\u0626\\u0642\\u0629.\",\"icon_url\":\"https:\\\/\\\/api.iconify.design\\\/lucide:shopping-bag.svg\",\"sort_order\":7,\"pwas_count\":1,\"children\":[]},{\"id\":8,\"name\":\"Health & Fitness\",\"name_ar\":\"\\u0635\\u062d\\u0629 \\u0648\\u0644\\u064a\\u0627\\u0642\\u0629\",\"slug\":\"health-fitness\",\"description\":\"\\u062a\\u062a\\u0628\\u0639 \\u0627\\u0644\\u062a\\u0645\\u0627\\u0631\\u064a\\u0646\\u060c \\u0627\\u0644\\u062d\\u0645\\u064a\\u0629 \\u0627\\u0644\\u063a\\u0630\\u0627\\u0626\\u064a\\u0629\\u060c \\u0648\\u0627\\u0644\\u0635\\u062d\\u0629 \\u0627\\u0644\\u0639\\u0627\\u0645\\u0629 \\u0648\\u0627\\u0644\\u0646\\u0641\\u0633\\u064a\\u0629.\",\"icon_url\":\"https:\\\/\\\/api.iconify.design\\\/lucide:heart-pulse.svg\",\"sort_order\":8,\"pwas_count\":1,\"children\":[]},{\"id\":9,\"name\":\"Tools\",\"name_ar\":\"\\u0623\\u062f\\u0648\\u0627\\u062a\",\"slug\":\"tools\",\"description\":\"\\u062d\\u0627\\u0633\\u0628\\u0627\\u062a\\u060c \\u0645\\u062d\\u0648\\u0644\\u0627\\u062a \\u0639\\u0645\\u0644\\u0627\\u062a \\u0648\\u0648\\u062d\\u062f\\u0627\\u062a\\u060c \\u0648\\u0623\\u062f\\u0648\\u0627\\u062a \\u0645\\u0633\\u0627\\u0639\\u062f\\u0629 \\u064a\\u0648\\u0645\\u064a\\u0629.\",\"icon_url\":\"https:\\\/\\\/api.iconify.design\\\/lucide:wrench.svg\",\"sort_order\":9,\"pwas_count\":2,\"children\":[]},{\"id\":10,\"name\":\"Finance\",\"name_ar\":\"\\u0645\\u0627\\u0644\\u064a\\u0629\",\"slug\":\"finance\",\"description\":\"\\u0625\\u062f\\u0627\\u0631\\u0629 \\u0627\\u0644\\u0645\\u064a\\u0632\\u0627\\u0646\\u064a\\u0629 \\u0627\\u0644\\u0634\\u062e\\u0635\\u064a\\u0629\\u060c \\u062a\\u062a\\u0628\\u0639 \\u0627\\u0644\\u0645\\u0635\\u0631\\u0648\\u0641\\u0627\\u062a\\u060c \\u0648\\u0623\\u062f\\u0648\\u0627\\u062a \\u0627\\u0644\\u0627\\u0633\\u062a\\u062b\\u0645\\u0627\\u0631 \\u0648\\u0627\\u0644\\u0639\\u0645\\u0644\\u0627\\u062a.\",\"icon_url\":\"https:\\\/\\\/api.iconify.design\\\/lucide:wallet.svg\",\"sort_order\":10,\"pwas_count\":2,\"children\":[]}],\"errors\":null}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "\u0627\u0644\u062a\u062b\u0628\u064a\u062a (Installations)",
+            "description": "\n\u062a\u062b\u0628\u064a\u062a \u0627\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u062a\u0642\u062f\u0645\u064a\u0629 \u0644\u0644\u0645\u0633\u062a\u062e\u062f\u0645 \u0627\u0644\u0645\u0635\u0627\u062f\u0642\u060c \u062a\u062a\u0628\u0639 \u0639\u062f\u062f \u0627\u0644\u062a\u062b\u0628\u064a\u062a\u0627\u062a\u060c \u0648\u0627\u0633\u062a\u0639\u0631\u0627\u0636 \u0633\u062c\u0644 \u0627\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u0645\u062b\u0628\u062a\u0629 \u0644\u0644\u0645\u0633\u062a\u062e\u062f\u0645.",
+            "item": [
+                {
+                    "name": "Get paginated list of installed PWAs for the authenticated user.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/me\/installations",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/me\/installations"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"per_page\":1,\"page\":22}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "content-language",
+                                    "value": "en"
+                                },
+                                {
+                                    "key": "x-content-type-options",
+                                    "value": "nosniff"
+                                },
+                                {
+                                    "key": "x-frame-options",
+                                    "value": "DENY"
+                                },
+                                {
+                                    "key": "referrer-policy",
+                                    "value": "no-referrer"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"success\":false,\"message\":\"Authentication is required to access this resource.\",\"data\":null,\"errors\":null}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Install a PWA for the authenticated user.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/pwas\/:slug\/install",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/pwas\/:slug\/install",
+                            "variable": [
+                                {
+                                    "id": "slug",
+                                    "key": "slug",
+                                    "value": "salati-qibla",
+                                    "description": "The slug of the pwa."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Idempotent: 201 on new install, 200 if already installed.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "\u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0627\u062a \u0648\u0627\u0644\u062a\u0642\u064a\u064a\u0645\u0627\u062a (Reviews)",
+            "description": "\n\u0625\u0636\u0627\u0641\u0629 \u062a\u0642\u064a\u064a\u0645 \u0648\u0645\u0631\u0627\u062c\u0639\u0629 \u0644\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u0645\u0646\u0634\u0648\u0631\u0629 (\u0645\u0631\u0627\u062c\u0639\u0629 \u0648\u0627\u062d\u062f\u0629 \u0644\u0643\u0644 \u0645\u0633\u062a\u062e\u062f\u0645)\u060c \u0648\u062a\u062d\u062f\u064a\u062b \u0623\u0648 \u062d\u0630\u0641 \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629 \u0627\u0644\u062e\u0627\u0635\u0629 \u0628\u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645.",
+            "item": [
+                {
+                    "name": "Submit a review for a PWA.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/pwas\/:slug\/reviews",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/pwas\/:slug\/reviews",
+                            "variable": [
+                                {
+                                    "id": "slug",
+                                    "key": "slug",
+                                    "value": "salati-qibla",
+                                    "description": "The slug of the pwa."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"rating\":2,\"title\":\"n\",\"content\":\"g\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update an existing review owned by the authenticated user.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/reviews\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/reviews\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": 1,
+                                    "description": "The ID of the review."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"rating\":2,\"title\":\"n\",\"content\":\"g\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Soft delete a review owned by the authenticated user.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/reviews\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/reviews\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": 1,
+                                    "description": "The ID of the review."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "\u0644\u0648\u062d\u0629 \u062a\u062d\u0643\u0645 \u0627\u0644\u0645\u0637\u0648\u0631 (Developer Dashboard)",
+            "description": "\n\u0627\u0633\u062a\u0639\u0631\u0627\u0636 \u0627\u0644\u0625\u062d\u0635\u0627\u0626\u064a\u0627\u062a \u0627\u0644\u0634\u0627\u0645\u0644\u0629 \u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u0645\u0637\u0648\u0631 (\u0625\u062c\u0645\u0627\u0644\u064a \u0627\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a\u060c \u0627\u0644\u062a\u062b\u0628\u064a\u062a\u0627\u062a\u060c \u0645\u062a\u0648\u0633\u0637 \u0627\u0644\u062a\u0642\u064a\u064a\u0645\u060c \u0623\u062d\u062f\u062b \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0627\u062a\u060c \u0648\u0623\u0639\u0644\u0649 \u0627\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0623\u062f\u0627\u0621\u064b).",
+            "item": [
+                {
+                    "name": "Get aggregate metrics and top items for the developer dashboard.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/developer\/dashboard",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/developer\/dashboard"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "content-language",
+                                    "value": "en"
+                                },
+                                {
+                                    "key": "x-content-type-options",
+                                    "value": "nosniff"
+                                },
+                                {
+                                    "key": "x-frame-options",
+                                    "value": "DENY"
+                                },
+                                {
+                                    "key": "referrer-policy",
+                                    "value": "no-referrer"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"success\":false,\"message\":\"Authentication is required to access this resource.\",\"data\":null,\"errors\":null}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "\u0625\u062f\u0627\u0631\u0629 \u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u0645\u0637\u0648\u0631 (Developer PWAs)",
+            "description": "\n\u0625\u0636\u0627\u0641\u0629 \u062a\u0637\u0628\u064a\u0642\u0627\u062a \u062c\u062f\u064a\u062f\u0629\u060c \u062a\u0639\u062f\u064a\u0644 \u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u0645\u0645\u0644\u0648\u0643\u0629 \u0644\u0644\u0645\u0637\u0648\u0631\u060c \u0648\u0625\u0639\u0627\u062f\u0629 \u062a\u0642\u062f\u064a\u0645 \u0627\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u0645\u0631\u0641\u0648\u0636\u0629 \u0628\u0639\u062f \u0627\u0644\u0645\u0639\u0627\u0644\u062c\u0629.",
+            "item": [
+                {
+                    "name": "Get paginated list of PWAs owned by the authenticated developer.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/developer\/pwas",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/developer\/pwas"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"status\":\"draft\",\"search\":\"b\",\"per_page\":22,\"page\":7}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "content-language",
+                                    "value": "en"
+                                },
+                                {
+                                    "key": "x-content-type-options",
+                                    "value": "nosniff"
+                                },
+                                {
+                                    "key": "x-frame-options",
+                                    "value": "DENY"
+                                },
+                                {
+                                    "key": "referrer-policy",
+                                    "value": "no-referrer"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"success\":false,\"message\":\"Authentication is required to access this resource.\",\"data\":null,\"errors\":null}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Submit a new PWA for review.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/developer\/pwas",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/developer\/pwas"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"category_id\":16,\"short_description\":\"n\",\"description\":\"Animi quos velit et fugiat.\",\"manifest_url\":\"http:\\\/\\\/www.dach.com\\\/mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html\",\"start_url\":\"http:\\\/\\\/swift.com\\\/quidem-nostrum-qui-commodi-incidunt-iure-odit.html\",\"icon_url\":\"https:\\\/\\\/www.leuschke.info\\\/nostrum-omnis-autem-et-consequatur-aut\",\"screenshots\":[\"z\"],\"version\":\"s\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update an existing PWA (draft or rejected only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/developer\/pwas\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/developer\/pwas\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "salati-qibla",
+                                    "description": "The ID of the pwa."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"category_id\":16,\"short_description\":\"n\",\"description\":\"Animi quos velit et fugiat.\",\"manifest_url\":\"http:\\\/\\\/www.dach.com\\\/mollitia-modi-deserunt-aut-ab-provident-perspiciatis-quo.html\",\"start_url\":\"http:\\\/\\\/swift.com\\\/quidem-nostrum-qui-commodi-incidunt-iure-odit.html\",\"icon_url\":\"https:\\\/\\\/www.leuschke.info\\\/nostrum-omnis-autem-et-consequatur-aut\",\"screenshots\":[\"z\"],\"version\":\"s\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Resubmit a rejected or draft PWA for review.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/developer\/pwas\/:id\/resubmit",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/developer\/pwas\/:id\/resubmit",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "salati-qibla",
+                                    "description": "The ID of the pwa."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "\u0628\u0648\u0627\u0628\u0629 \u0627\u0644\u0645\u0634\u0631\u0641 (Moderator Portal)",
+            "description": "\n\u0627\u0633\u062a\u0639\u0631\u0627\u0636 \u0642\u0627\u0626\u0645\u0629 \u0627\u0644\u062a\u0637\u0628\u064a\u0642\u0627\u062a \u0627\u0644\u0645\u0639\u0644\u0642\u0629 \u0628\u0646\u0638\u0627\u0645 \u0627\u0644\u0623\u0642\u062f\u0645 \u0623\u0648\u0644\u0627\u064b (FIFO)\u060c \u0641\u062d\u0635 \u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u062a\u0637\u0628\u064a\u0642 \u0648\u0627\u0644\u0645\u0637\u0648\u0631\u060c \u0648\u0627\u0644\u0645\u0648\u0627\u0641\u0642\u0629 \u0639\u0644\u0649 \u0627\u0644\u0646\u0634\u0631 \u0623\u0648 \u0627\u0644\u0631\u0641\u0636 \u0645\u0639 \u0633\u0628\u0628 \u0645\u0637\u0647\u0631.",
+            "item": [
+                {
+                    "name": "Get pending PWAs for review in FIFO order.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/moderator\/pwas\/pending",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/moderator\/pwas\/pending"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"search\":\"b\",\"per_page\":22,\"page\":7}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "content-language",
+                                    "value": "en"
+                                },
+                                {
+                                    "key": "x-content-type-options",
+                                    "value": "nosniff"
+                                },
+                                {
+                                    "key": "x-frame-options",
+                                    "value": "DENY"
+                                },
+                                {
+                                    "key": "referrer-policy",
+                                    "value": "no-referrer"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"success\":false,\"message\":\"Authentication is required to access this resource.\",\"data\":null,\"errors\":null}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get details of a PWA for moderator review.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/moderator\/pwas\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/moderator\/pwas\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "salati-qibla",
+                                    "description": "The ID of the pwa."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-content-type-options",
+                                    "value": "nosniff"
+                                },
+                                {
+                                    "key": "x-frame-options",
+                                    "value": "DENY"
+                                },
+                                {
+                                    "key": "referrer-policy",
+                                    "value": "no-referrer"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\"success\":false,\"message\":\"The requested resource was not found.\",\"data\":null,\"errors\":null}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Approve a pending PWA and publish it.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/moderator\/pwas\/:id\/approve",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/moderator\/pwas\/:id\/approve",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "salati-qibla",
+                                    "description": "The ID of the pwa."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Reject a pending PWA with reason.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/moderator\/pwas\/:id\/reject",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/moderator\/pwas\/:id\/reject",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "salati-qibla",
+                                    "description": "The ID of the pwa."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"reason\":\"b\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "Authorization",
+                "type": "string"
+            }
+        ]
+    }
+}

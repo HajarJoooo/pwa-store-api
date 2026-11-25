@@ -1,0 +1,395 @@
+### ==============================================================================
+### PWA Store API - Phase 4: Public Endpoints (Unauthenticated)
+### Base URL: http://localhost:8000/api/v1
+### All responses follow ApiResponse format: { success, message, data, [meta, links], errors }
+### ==============================================================================
+
+@baseUrl = http://localhost:8000/api/v1
+@acceptJson = application/json
+@acceptLanguage = ar
+
+### ------------------------------------------------------------------------------
+### 1. GET /pwas - قائمة التطبيقات المنشورة الافتراضية (أحدث التطبيقات)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تم جلب البيانات بنجاح",
+#   "data": [
+#     {
+#       "id": 1,
+#       "name": "متجر أذكار المسلم",
+#       "slug": "azkar-muslim-app",
+#       "short_description": "تطبيق ويب تقدمي للأذكار اليومية وحصن المسلم",
+#       "icon_url": "https://example.com/icons/azkar.png",
+#       "version": "1.2.0",
+#       "rating_average": 4.85,
+#       "review_count": 24,
+#       "install_count": 350,
+#       "category": {
+#         "id": 2,
+#         "name": "Islamic & Lifestyle",
+#         "name_ar": "إسلاميات وأسلوب حياة",
+#         "slug": "islamic-lifestyle"
+#       },
+#       "created_at": "2026-11-12T18:00:00.000000Z"
+#     }
+#   ],
+#   "meta": {
+#     "current_page": 1,
+#     "from": 1,
+#     "last_page": 1,
+#     "per_page": 12,
+#     "to": 1,
+#     "total": 1
+#   },
+#   "links": {
+#     "first": "http://localhost:8000/api/v1/pwas?page=1",
+#     "last": "http://localhost:8000/api/v1/pwas?page=1",
+#     "prev": null,
+#     "next": null
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 2. GET /pwas - البحث بالكلمات والرموز مع التهريب (Search with Wildcards)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas?search=أذكار
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تم جلب البيانات بنجاح",
+#   "data": [
+#     {
+#       "id": 1,
+#       "name": "متجر أذكار المسلم",
+#       "slug": "azkar-muslim-app",
+#       "short_description": "تطبيق ويب تقدمي للأذكار اليومية وحصن المسلم",
+#       "icon_url": "https://example.com/icons/azkar.png",
+#       "version": "1.2.0",
+#       "rating_average": 4.85,
+#       "review_count": 24,
+#       "install_count": 350,
+#       "category": {
+#         "id": 2,
+#         "name": "Islamic & Lifestyle",
+#         "name_ar": "إسلاميات وأسلوب حياة",
+#         "slug": "islamic-lifestyle"
+#       },
+#       "created_at": "2026-11-12T18:00:00.000000Z"
+#     }
+#   ],
+#   "meta": {
+#     "current_page": 1,
+#     "from": 1,
+#     "last_page": 1,
+#     "per_page": 12,
+#     "to": 1,
+#     "total": 1
+#   },
+#   "links": {
+#     "first": "http://localhost:8000/api/v1/pwas?search=%D8%A3%D8%B0%D9%83%D8%A7%D8%B1&page=1",
+#     "last": "http://localhost:8000/api/v1/pwas?search=%D8%A3%D8%B0%D9%83%D8%A7%D8%B1&page=1",
+#     "prev": null,
+#     "next": null
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 3. GET /pwas - التصفية حسب التصنيف والترتيب حسب الأكثر تثبيتاً (Popular)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas?category=islamic-lifestyle&sort=popular&per_page=10
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تم جلب البيانات بنجاح",
+#   "data": [
+#     {
+#       "id": 1,
+#       "name": "متجر أذكار المسلم",
+#       "slug": "azkar-muslim-app",
+#       "short_description": "تطبيق ويب تقدمي للأذكار اليومية وحصن المسلم",
+#       "icon_url": "https://example.com/icons/azkar.png",
+#       "version": "1.2.0",
+#       "rating_average": 4.85,
+#       "review_count": 24,
+#       "install_count": 350,
+#       "category": {
+#         "id": 2,
+#         "name": "Islamic & Lifestyle",
+#         "name_ar": "إسلاميات وأسلوب حياة",
+#         "slug": "islamic-lifestyle"
+#       },
+#       "created_at": "2026-11-12T18:00:00.000000Z"
+#     }
+#   ],
+#   "meta": {
+#     "current_page": 1,
+#     "from": 1,
+#     "last_page": 1,
+#     "per_page": 10,
+#     "to": 1,
+#     "total": 1
+#   },
+#   "links": {
+#     "first": "http://localhost:8000/api/v1/pwas?category=islamic-lifestyle&sort=popular&per_page=10&page=1",
+#     "last": "http://localhost:8000/api/v1/pwas?category=islamic-lifestyle&sort=popular&per_page=10&page=1",
+#     "prev": null,
+#     "next": null
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 4. GET /pwas - خطأ تحقق: نوع ترتيب غير صالح (422 Unprocessable Entity)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas?sort=invalid_sort
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "البيانات المقدمة غير صالحة.",
+#   "data": null,
+#   "errors": {
+#     "sort": [
+#       "قيمة ترتيب غير صالحة."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 5. GET /pwas - خطأ تحقق: تجاوز الحد الأقصى لعدد النتائج (per_page > 50)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas?per_page=100
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "البيانات المقدمة غير صالحة.",
+#   "data": null,
+#   "errors": {
+#     "per_page": [
+#       "يجب ألا يتجاوز عدد العناصر في الصفحة 50."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 6. GET /pwas - خطأ تحقق: تصنيف غير موجود في قاعدة البيانات (422)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas?category=unknown-category
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "البيانات المقدمة غير صالحة.",
+#   "data": null,
+#   "errors": {
+#     "category": [
+#       "التصنيف المحدد غير موجود."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 7. GET /pwas/{slug} - تفاصيل تطبيق منشور (200 OK)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas/azkar-muslim-app
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تم جلب البيانات بنجاح",
+#   "data": {
+#     "id": 1,
+#     "name": "متجر أذكار المسلم",
+#     "slug": "azkar-muslim-app",
+#     "description": "تطبيق شامل للأذكار الصباحية والمسائية وأذكار النوم مع عداد تسبيح إلكتروني وتنبيهات أوقات الصلاة.",
+#     "short_description": "تطبيق ويب تقدمي للأذكار اليومية وحصن المسلم",
+#     "app_url": "https://azkar.example.com",
+#     "start_url": "https://azkar.example.com/start",
+#     "manifest_url": "https://azkar.example.com/manifest.json",
+#     "icon_url": "https://example.com/icons/azkar.png",
+#     "screenshots": [
+#       "https://example.com/screens/screen1.png",
+#       "https://example.com/screens/screen2.png"
+#     ],
+#     "version": "1.2.0",
+#     "rating_average": 4.85,
+#     "review_count": 24,
+#     "install_count": 350,
+#     "category": {
+#       "id": 2,
+#       "name": "Islamic & Lifestyle",
+#       "name_ar": "إسلاميات وأسلوب حياة",
+#       "slug": "islamic-lifestyle"
+#     },
+#     "developer": {
+#       "id": 5,
+#       "name": "أحمد الشمري"
+#     },
+#     "created_at": "2026-11-12T18:00:00.000000Z",
+#     "updated_at": "2026-11-12T19:30:00.000000Z"
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 8. GET /pwas/{slug} - محاولة جلب تطبيق غير منشور أو غير موجود (404 Not Found)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas/unpublished-or-pending-app
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+
+### Response: 404 Not Found
+# {
+#   "success": false,
+#   "message": "العنصر المطلوب غير موجود.",
+#   "data": null,
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 9. GET /categories - شجرة التصنيفات النشطة مع عدد التطبيقات المنشورة (مخزنة Cache 10 دقائق)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/categories
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تم جلب البيانات بنجاح",
+#   "data": [
+#     {
+#       "id": 1,
+#       "name": "Productivity & Tools",
+#       "name_ar": "الإنتاجية والأدوات",
+#       "slug": "productivity-tools",
+#       "description": "تطبيقات تعزز الإنتاجية وتنظيم المهام",
+#       "icon": "folder-outline",
+#       "sort_order": 1,
+#       "pwas_count": 5,
+#       "children": [
+#         {
+#           "id": 4,
+#           "name": "Task Managers",
+#           "name_ar": "إدارة المهام",
+#           "slug": "task-managers",
+#           "description": "قوائم المهام وتتبع الوقت",
+#           "icon": "checkbox-outline",
+#           "sort_order": 1,
+#           "pwas_count": 3
+#         }
+#       ]
+#     },
+#     {
+#       "id": 2,
+#       "name": "Islamic & Lifestyle",
+#       "name_ar": "إسلاميات وأسلوب حياة",
+#       "slug": "islamic-lifestyle",
+#       "description": "تطبيقات الأذكار والمواقيت وأسلوب الحياة",
+#       "icon": "moon-outline",
+#       "sort_order": 2,
+#       "pwas_count": 8,
+#       "children": []
+#     }
+#   ],
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 10. GET /pwas/{slug}/reviews - مراجعات التطبيق المعتمدة (مرتبة حسب الأحدث)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas/azkar-muslim-app/reviews?sort=newest&per_page=10
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+
+### Response: 200 OK
+# {
+#   "success": true,
+#   "message": "تم جلب البيانات بنجاح",
+#   "data": [
+#     {
+#       "id": 12,
+#       "rating": 5,
+#       "title": "تطبيق رائع وخفيف وسريع",
+#       "comment": "واجهة مستخدم ممتازة جداً وتعمل دون اتصال بالإنترنت بكفاءة عالية.",
+#       "helpful_count": 14,
+#       "user": {
+#         "id": 8,
+#         "name": "سارة المحمد"
+#       },
+#       "created_at": "2026-11-13T01:15:00.000000Z"
+#     }
+#   ],
+#   "meta": {
+#     "current_page": 1,
+#     "from": 1,
+#     "last_page": 1,
+#     "per_page": 10,
+#     "to": 1,
+#     "total": 1
+#   },
+#   "links": {
+#     "first": "http://localhost:8000/api/v1/pwas/azkar-muslim-app/reviews?sort=newest&per_page=10&page=1",
+#     "last": "http://localhost:8000/api/v1/pwas/azkar-muslim-app/reviews?sort=newest&per_page=10&page=1",
+#     "prev": null,
+#     "next": null
+#   },
+#   "errors": null
+# }
+
+### ------------------------------------------------------------------------------
+### 11. GET /pwas/{slug}/reviews - خطأ تحقق: نوع ترتيب مراجعات غير صالح (422)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas/azkar-muslim-app/reviews?sort=oldest
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+
+### Response: 422 Unprocessable Entity
+# {
+#   "success": false,
+#   "message": "البيانات المقدمة غير صالحة.",
+#   "data": null,
+#   "errors": {
+#     "sort": [
+#       "قيمة ترتيب غير صالحة."
+#     ]
+#   }
+# }
+
+### ------------------------------------------------------------------------------
+### 12. GET /pwas/{slug}/reviews - محاولة جلب مراجعات لتطبيق غير منشور أو غير موجود (404)
+### ------------------------------------------------------------------------------
+GET {{baseUrl}}/pwas/non-existent-app/reviews
+Accept: {{acceptJson}}
+Accept-Language: {{acceptLanguage}}
+
+### Response: 404 Not Found
+# {
+#   "success": false,
+#   "message": "العنصر المطلوب غير موجود.",
+#   "data": null,
+#   "errors": null
+# }
